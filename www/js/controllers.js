@@ -1,20 +1,21 @@
-angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+app.controller('DashCtrl', function($scope) {})
 
-.controller('ChatsCtrl', function($scope, Chats) {
+app.controller('ChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
   $scope.remove = function(chat) {
     Chats.remove(chat);
   }
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+app.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
+  console.log($stateParams)
   $scope.chat = Chats.get($stateParams.chatId);
+  console.log($scope.chat)
 })
 
-.controller('AccountCtrl', function($scope) {
+app.controller('AccountCtrl', function($scope) {
   $scope.settings = {
-    enableFriends: true
+    enableFriends: false
   };
 });

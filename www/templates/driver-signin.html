@@ -1,0 +1,21 @@
+<ion-view view-title="Welcome Driver">
+  <ion-content>
+    <div class="center">
+      <form ng-submit="createTask(task)">
+        <div class="login">
+          <label class="item item-input">
+            <input type="email" placeholder="Email">
+          </label>
+          <label class="item item-input">
+            <input type="password" placeholder="Password">
+          </label>
+        </div>
+        <div class="padding">
+          <button type="submit" class="button button-block button-positive">Sign In</button>
+        </div>
+      </form>
+      <h4><a ui-sref="driverRegister">New?...Register</a></h4>
+      <h3><a ui-sref="passenger">Passenger?</a></h3>
+    </div>
+  </ion-content>
+</ion-view>
