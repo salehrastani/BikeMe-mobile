@@ -1,3 +1,7 @@
+// build service for current user to access from
+
+
+
 
 app.factory('Chats', function() {
   // Might use a resource here that returns a JSON array

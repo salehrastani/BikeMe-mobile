@@ -5,76 +5,78 @@ app.config(function($stateProvider, $urlRouterProvider) {
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
 
-  $urlRouterProvider.otherwise('passenger');
-
+  $urlRouterProvider.otherwise('passenger/login');
   $stateProvider
 
-  .state('passenger', {
-    url: '/passenger',
-    templateUrl: 'templates/passenger-signin.html'
+//---------Passenger Authentication States-----------
+
+  .state('passengerLogin', {
+    url: '/passenger/login',
+    templateUrl: 'templates/passenger-login.html',
+    controller: 'passengerSigninCtrl'
   })
 
   .state('passengerRegister', {
     url: '/passenger/register',
-    templateUrl: 'templates/passenger-register.html',
+    templateUrl: 'templates/passenger-register.html'
   })
 
-  .state('driver', {
-    url: '/driver',
-    templateUrl: 'templates/driver-signin.html'
+//---------Driver Authentication States-----------
+
+  .state('driverLogin', {
+    url: '/driver/login',
+    templateUrl: 'templates/driver-login.html'
   })
 
   .state('driverRegister', {
     url: '/driver/register',
-    templateUrl: 'templates/driver-register.html',
+    templateUrl: 'templates/driver-register.html'
   })
 
+//------------Passenger Tab States---------------
 
-
-  // setup an abstract state for the tabs directive
-  .state('tab', {
-  url: "/tab",
+  .state('passenger', {
+  url: "/passenger",
   abstract: true,
-  templateUrl: "templates/tabs.html"
+  templateUrl: "templates/passenger-tabs.html"
   })
 
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
+  .state('passenger.dash', {
     url: '/dash',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+        templateUrl: 'templates/passenger-dash.html',
+        controller: 'passengerDashCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
+  .state('passenger.chats', {
       url: '/chats',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
+          templateUrl: 'templates/passenger-chats.html',
+          controller: 'passengerChatsCtrl'
         }
       }
     })
 
-  .state('tab.account', {
+    .state('passenger.chat-detail', {
+      url: '/chats/:chatId',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/passenger-chat-detail.html',
+          controller: 'passengerChatDetailCtrl'
+        }
+      }
+    })
+
+  .state('passenger.account', {
     url: '/account',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+        templateUrl: 'templates/passenger-account.html',
+        controller: 'passengerAccountCtrl'
       }
     }
   });
@@ -82,3 +84,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
   // if none of the above states are matched, use this as the fallback
 
 });
+
+
+//------------Driver Tab States---------------
