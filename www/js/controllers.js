@@ -17,9 +17,6 @@ app.controller('passengerDashCtrl', function($scope) {})
 
 app.controller('passengerChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  }
 })
 
 app.controller('passengerChatDetailCtrl', function($scope, $stateParams, Chats) {

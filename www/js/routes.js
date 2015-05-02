@@ -36,10 +36,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
 //------------Passenger Tab States---------------
 
   .state('passenger', {
-  url: "/passenger",
-  abstract: true,
-  templateUrl: "templates/passenger-tabs.html"
+    url: "/passenger",
+    abstract: true,
+    templateUrl: "templates/passenger-tabs.html"
   })
+
 
   .state('passenger.dash', {
     url: '/dash',
@@ -79,9 +80,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller: 'passengerAccountCtrl'
       }
     }
-  });
+  })
 
-  // if none of the above states are matched, use this as the fallback
+
+
 
 });
 
