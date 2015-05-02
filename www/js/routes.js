@@ -8,7 +8,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('passenger/login');
   $stateProvider
 
-//---------Passenger Authentication States-----------
+//--------- Passenger Authentication -----------
 
   .state('passengerLogin', {
     url: '/passenger/login',
@@ -21,7 +21,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/passenger-register.html'
   })
 
-//---------Driver Authentication States-----------
+//--------- Driver Authentication -----------
 
   .state('driverLogin', {
     url: '/driver/login',
@@ -33,7 +33,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/driver-register.html'
   })
 
-//------------Passenger Tab States---------------
+//------------ Passenger Tab ---------------
 
   .state('passenger', {
     url: "/passenger",
@@ -44,48 +44,29 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
   .state('passenger.dash', {
     url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/passenger-dash.html',
-        controller: 'passengerDashCtrl'
-      }
-    }
+    templateUrl: 'templates/passenger-dash.html',
+    controller: 'passengerDashCtrl'
   })
 
   .state('passenger.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/passenger-chats.html',
-          controller: 'passengerChatsCtrl'
-        }
-      }
-    })
+    url: '/chats',
+    templateUrl: 'templates/passenger-chats.html',
+    controller: 'passengerChatsCtrl'
+  })
 
-    .state('passenger.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/passenger-chat-detail.html',
-          controller: 'passengerChatDetailCtrl'
-        }
-      }
-    })
+  .state('passenger.chat-detail', {
+    url: '/chats/:chatId',
+    templateUrl: 'templates/passenger-chat-detail.html',
+    controller: 'passengerChatDetailCtrl'
+  })
 
   .state('passenger.account', {
     url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/passenger-account.html',
-        controller: 'passengerAccountCtrl'
-      }
-    }
+    templateUrl: 'templates/passenger-account.html',
+    controller: 'passengerAccountCtrl'
   })
-
-
-
 
 });
 
 
-//------------Driver Tab States---------------
+//------------ Driver Tab ---------------
