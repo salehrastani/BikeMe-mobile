@@ -13,7 +13,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   .state('passengerLogin', {
     url: '/passenger/login',
     templateUrl: 'templates/passenger-login.html',
-    controller: 'passengerSigninCtrl'
+    // controller: 'passengerSigninCtrl'
   })
 
   .state('passengerRegister', {
@@ -35,6 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 //------------ Passenger Tab ---------------
 
+// This route is the parent passenger tabs route
   .state('passenger', {
     url: "/passenger",
     abstract: true,
