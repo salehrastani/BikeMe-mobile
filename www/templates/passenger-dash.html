@@ -1,6 +1,12 @@
 <ion-view view-title="Dashboard">
-  <ion-content class="padding">
-    <div class="list card">
+  <ion-content scroll="false">
+      <map on-create="mapCreated(map)"></map>
+    <!-- <ion-footer-bar class="bar-stable">
+      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+    </ion-footer-bar> -->
+
+
+    <!-- <div class="list card">
       <div class="item item-divider">Recent Updates</div>
       <div class="item item-body">
         <div>
@@ -23,7 +29,7 @@
           You have <b>29</b> meetings on your calendar tomorrow.
         </div>
       </div>
-    </div>
+    </div> -->
   </ion-content>
 </ion-view>
 
