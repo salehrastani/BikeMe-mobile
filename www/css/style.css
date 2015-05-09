@@ -17,7 +17,7 @@ map {
   height: 100%;
 }
 
-.on-top a {
+.on-top {
   /*display: block;*/
   position: absolute;
   z-index: 1;
