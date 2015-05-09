@@ -38,6 +38,7 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
   };
 });
 
+
 app.controller('passengerChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
 })

@@ -15,12 +15,21 @@ app.directive('map', function() {
           streetViewControl: false,
         };
         var map = new google.maps.Map($element[0], mapOptions);
+        var image = {
+          url: "../img/motor-bike-64.png",
+          // size: new google.maps.Size(71, 71),
+          // origin: new google.maps.Point(0, 0),
+          // anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(37, 37)
+        };
 
         var marker = new google.maps.Marker({
           map: map,
+          position: mapOptions.center,
           animation: google.maps.Animation.DROP,
-          position: mapOptions.center
+          icon: image
         });
+
 
         $scope.onCreate({map: map});
 
