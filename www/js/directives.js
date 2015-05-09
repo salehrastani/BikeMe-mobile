@@ -7,8 +7,17 @@ app.directive('map', function() {
     link: function ($scope, $element, $attr) {
       function initialize() {
 
+        var options = {
+          enableHighAccuracy: true,
+          timeout: 7000,
+          maximumAge: 0
+        };
+
+        var fail = function(){
+          return;
+        }
+
         navigator.geolocation.getCurrentPosition(function (position) {
-          $scope.position = position;
 
           var mapOptions = {
             center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
@@ -42,7 +51,7 @@ app.directive('map', function() {
             e.preventDefault();
             return false;
           });
-        });
+        },fail, options);
       }
 
       if (document.readyState === "complete") {
