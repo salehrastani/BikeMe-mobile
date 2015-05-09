@@ -17,9 +17,9 @@ app.directive('map', function() {
         var map = new google.maps.Map($element[0], mapOptions);
 
         var marker = new google.maps.Marker({
-          position: mapOptions.center,
           map: map,
-          animation: google.maps.Animation.DROP
+          animation: google.maps.Animation.DROP,
+          position: mapOptions.center
         });
 
         $scope.onCreate({map: map});
