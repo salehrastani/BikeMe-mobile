@@ -6,17 +6,22 @@ app.directive('map', function() {
     },
     link: function ($scope, $element, $attr) {
       function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(43.07493, -89.381388),
-          zoom: 16,
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          zoomControl: false,
-          mapTypeControl: false,
-          streetViewControl: false,
-        };
-        var map = new google.maps.Map($element[0], mapOptions);
-        var image = {
-          url: "../img/motor-bike-64.png",
+
+        navigator.geolocation.getCurrentPosition(function (position) {
+          $scope.position = position;
+
+
+          var mapOptions = {
+            center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            zoom: 16,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoomControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+          };
+          var map = new google.maps.Map($element[0], mapOptions);
+          var image = {
+            url: "../img/motor-bike-64.png",
           // size: new google.maps.Size(71, 71),
           // origin: new google.maps.Point(0, 0),
           // anchor: new google.maps.Point(17, 34),
@@ -25,11 +30,10 @@ app.directive('map', function() {
 
         var marker = new google.maps.Marker({
           map: map,
-          position: mapOptions.center,
+          position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
           animation: google.maps.Animation.DROP,
           icon: image
         });
-
 
         $scope.onCreate({map: map});
 
@@ -38,12 +42,13 @@ app.directive('map', function() {
           e.preventDefault();
           return false;
         });
-      }
+      });
+    }
 
-      if (document.readyState === "complete") {
-        initialize();
-      } else {
-        google.maps.event.addDomListener(window, 'load', initialize);
+    if (document.readyState === "complete") {
+      initialize();
+    } else {
+      google.maps.event.addDomListener(window, 'load', initialize);
       }
     }
   }
