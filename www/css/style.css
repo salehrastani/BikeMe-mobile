@@ -12,15 +12,16 @@ map {
   height: 100%;
 
 }
+
 .scroll {
   height: 100%;
 }
 
-
-.on-top {
-  display: inline-block;
+.on-top a {
+  /*display: block;*/
   position: absolute;
   z-index: 1;
-  /*height: 2%;*/
-
+  /*bottom: 50px;*/
+  /*float: right; */
+  bottom: 8%;
 }
