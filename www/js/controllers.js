@@ -26,7 +26,6 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 
     navigator.geolocation.getCurrentPosition(function (pos) {
       console.log('Got your location');
-      console.log($scope.map)
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
       $ionicLoading.hide();
     }, function (error) {
