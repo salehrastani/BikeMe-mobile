@@ -11,7 +11,7 @@ app.directive('map', function() {
           zoom: 16,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           zoomControl: false,
-
+          mapTypeControl: false,
 
         };
         var map = new google.maps.Map($element[0], mapOptions);
