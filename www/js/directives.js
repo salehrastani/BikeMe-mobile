@@ -12,7 +12,7 @@ app.directive('map', function() {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           zoomControl: false,
           mapTypeControl: false,
-
+          streetViewControl: false,
         };
         var map = new google.maps.Map($element[0], mapOptions);
 
