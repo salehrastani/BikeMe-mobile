@@ -6,9 +6,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
   // Each state's controller can be found in controllers.js
 
   $urlRouterProvider.otherwise('passenger/login');
-  $stateProvider
 
 //--------- Passenger Authentication -----------
+
+  $stateProvider
 
   .state('passengerLogin', {
     url: '/passenger/login',

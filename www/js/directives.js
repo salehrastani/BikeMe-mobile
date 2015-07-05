@@ -30,7 +30,7 @@ app.directive('map', function() {
 
           var map = new google.maps.Map($element[0], mapOptions);
           var image = {
-            url: "../img/motor-bike-64.png",
+            url: "img/motor-bike-64.png",
           // size: new google.maps.Size(71, 71),
           // origin: new google.maps.Point(0, 0),
           // anchor: new google.maps.Point(17, 34),
