@@ -19,5 +19,6 @@ map {
 .on-top {
   position: absolute;
   z-index: 1;
-  bottom: 8%;
+  bottom: 10%;
+  left: 5%;
 }

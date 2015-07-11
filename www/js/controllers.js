@@ -1,6 +1,4 @@
 
-
-
 app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 
   // $scope.getMyLocation = function(){
