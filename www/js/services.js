@@ -1,4 +1,17 @@
 
+// app.factory('SessionService', function(CookieHandler, $http){
+//   return function(authInfo){
+//     $http.post('http://localhost:3000/passengers/signin', authInfo)
+//     .success(function(data){
+//       CookieHandler.set(data.user);
+//     })
+//       .error(function(){
+//           //do something
+//     });
+//   };
+// });
+
+
 app.factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

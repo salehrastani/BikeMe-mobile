@@ -11,15 +11,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
 
+  .state('passengerRegister', {
+    url: '/passenger/register',
+    templateUrl: 'templates/passenger-register.html',
+    controller: "passengerRegisterCtrl"
+  })
+
   .state('passengerLogin', {
     url: '/passenger/login',
     templateUrl: 'templates/passenger-login.html',
     // controller: 'passengerSigninCtrl'
-  })
-
-  .state('passengerRegister', {
-    url: '/passenger/register',
-    templateUrl: 'templates/passenger-register.html'
   })
 
 //--------- Driver Authentication -----------

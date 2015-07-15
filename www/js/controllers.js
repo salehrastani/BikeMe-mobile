@@ -1,4 +1,21 @@
+//-----------------------------------------------
+app.controller('passengerRegisterCtrl', function($scope, $http){
+  $scope.newPassenger = function(registrationData){
+    $http.post('http://localhost:3000/passengers/create', registrationData)
+      .success(function(data){
+        console.log("the ajax call worked!!!!!!!!")
+        console.log(data)
+        // do something good
+    })
+      .error(function(){
+        console.log("something needs to change!!!!!!!!!")
+        console.log(data)
+          //do something bad
+    });
+  };
+})
 
+//-----------------------------------------------
 app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 
   // $scope.getMyLocation = function(){
@@ -44,16 +61,19 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 //   }
 // })
 
+//-----------------------------------------------
 app.controller('passengerChatsCtrl', function($scope, Chats) {
   $scope.chats = Chats.all();
 })
 
+//-----------------------------------------------
 app.controller('passengerChatDetailCtrl', function($scope, $stateParams, Chats) {
   // console.log($stateParams)
   $scope.chat = Chats.get($stateParams.chatId);
   // console.log($scope.chat)
 })
 
+//-----------------------------------------------
 app.controller('passengerAccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: false

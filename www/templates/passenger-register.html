@@ -4,20 +4,20 @@
       <form>
         <div>
           <label class="item item-input">
-            <input type="text" placeholder="Name">
+            <input type="text" ng-model= "register.name" placeholder="Name">
           </label>
           <label class="item item-input">
-            <input type="email" placeholder="Email">
+            <input type="email" ng-model= "register.email" placeholder="Email">
           </label>
           <label class="item item-input">
-            <input type="password" placeholder="Password">
+            <input type="password" ng-model= "register.password" placeholder="Password">
           </label>
           <label class="item item-input">
-            <input type="password" placeholder="Password Confirmation">
+            <input type="password" ng-model= "register.password_confirmation" placeholder="Password Confirmation">
           </label>
         </div>
         <div class="padding">
-          <button type="submit" class="button button-block button-positive">Register</button>
+          <button ng-click="newPassenger(register)" type="submit" name="RegisterButton" class="button button-block button-positive">Register</button>
         </div>
       </form>
       <h3><a ui-sref="driverLogin">Driver</a></h3>
