@@ -1,7 +1,8 @@
 //-----------------------------------------------
 app.controller('passengerRegisterCtrl', function($scope, $http){
   $scope.newPassenger = function(registrationData){
-    $http.post('http://localhost:3000/passengers/create', registrationData)
+    console.log(registrationData)
+    $http.post('http://localhost:3000/passengers', registrationData)
       .success(function(data){
         console.log("the ajax call worked!!!!!!!!")
         console.log(data)
@@ -9,7 +10,7 @@ app.controller('passengerRegisterCtrl', function($scope, $http){
     })
       .error(function(){
         console.log("something needs to change!!!!!!!!!")
-        console.log(data)
+        // console.log(data)
           //do something bad
     });
   };
