@@ -1,17 +1,14 @@
+
 //-----------------------------------------------
-app.controller('passengerRegisterCtrl', function($scope, $http){
+app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window){
   $scope.newPassenger = function(registrationData){
     console.log(registrationData)
     $http.post('http://localhost:3000/passengers', registrationData)
       .success(function(data){
-        console.log("the ajax call worked!!!!!!!!")
         console.log(data)
-        // do something good
+        // $window.location = "#passenger/dash";
     })
       .error(function(){
-        console.log("something needs to change!!!!!!!!!")
-        // console.log(data)
-          //do something bad
     });
   };
 })
