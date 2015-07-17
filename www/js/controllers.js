@@ -1,12 +1,13 @@
 
 //-----------------------------------------------
-app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window){
+app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.newPassenger = function(registrationData){
     console.log(registrationData)
     $http.post('http://localhost:3000/passengers', registrationData)
       .success(function(data){
+        CookieHandler.set(data.email);
         console.log(data)
-        // $window.location = "#passenger/dash";
+        // $window.location = "#passenger/photo";
     })
       .error(function(){
     });

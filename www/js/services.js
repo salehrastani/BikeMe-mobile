@@ -1,4 +1,38 @@
+app.factory('SessionInjector', function(CookieHandler){
+  return {
+    request: function(config) {
+      if (CookieHandler.get() !== undefined) {
+        config.headers['token'] = CookieHandler.get().token;
+        config.headers['username'] = CookieHandler.get().username;
+      }
+      return config;
+    }
+  }
+})
 
+// ----------------------------------------------------
+app.factory('CookieHandler', function($cookies){
+
+  var user = null;
+  var CookieHandler = {
+      set: function(user){
+          $cookies.put('currentUser', user);
+      },
+
+      get: function(){
+          var getCookie = $cookies['currentUser'];
+          return getCookie
+      },
+
+      delete: function(user){
+          $cookies.remove('currentUser');
+      }
+  };
+
+  return CookieHandler;
+});
+
+// -------------------------------------------------------
 // app.factory('SessionService', function(CookieHandler, $http){
 //   return function(authInfo){
 //     $http.post('http://localhost:3000/passengers/signin', authInfo)
@@ -11,7 +45,7 @@
 //   };
 // });
 
-
+// ------------------------------------------------------
 app.factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 
