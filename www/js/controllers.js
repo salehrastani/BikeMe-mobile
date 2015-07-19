@@ -13,6 +13,19 @@ app.controller('passengerRegisterCtrl', function($scope, $http, $location, $wind
   };
 })
 
+// ----------------------------------------------
+app.controller('passengerSigninCtrl', function($scope, $http, $location, $window, CookieHandler){
+  $scope.signin = function(signinData){
+    console.log(signinData);
+    $http.post('http://localhost:3000/passengers/login', signinData)
+    .success(function(data){
+      console.log(data)
+      // CookieHandler.set(data);
+      // $window.location = "#passenger/photo";
+    })
+  }
+})
+
 //-----------------------------------------------
 app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 
@@ -46,18 +59,6 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
     });
   };
 });
-
-// app.controller('passengerSigninCtrl', function($scope, $stateParams, $http) {
-//   $scope.data = {}
-//   console.log($stateParams)
-//   $scope.login = function(){
-//     console.log($scope.data);
-//     $http.post('http://bike-me.herokuapp.com', data).success(function(data){
-//       $location.path("tab.passengerDash")
-//       //add service to keep care of current user
-//     });
-//   }
-// })
 
 //-----------------------------------------------
 app.controller('passengerChatsCtrl', function($scope, Chats) {

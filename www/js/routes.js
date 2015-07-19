@@ -4,7 +4,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $urlRouterProvider.otherwise('passenger/login');
+  $urlRouterProvider.otherwise('passenger/signin');
 
 //--------- Passenger Authentication -----------
 
@@ -16,10 +16,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: "passengerRegisterCtrl"
   })
 
-  .state('passengerLogin', {
-    url: '/passenger/login',
-    templateUrl: 'templates/passenger-login.html',
-    // controller: 'passengerSigninCtrl'
+  .state('passengerSignin', {
+    url: '/passenger/signin',
+    templateUrl: 'templates/passenger-signin.html',
+    controller: 'passengerSigninCtrl'
   })
 
 //--------- Driver Authentication -----------

@@ -3,7 +3,7 @@ app.factory('SessionInjector', function(CookieHandler){
     request: function(config) {
       if (CookieHandler.get() !== undefined) {
         config.headers['token'] = CookieHandler.get().token;
-        confiq.headers['email'] = CookieHandler.get().email;
+        config.headers['email'] = CookieHandler.get().email;
       }
       return config;
     }

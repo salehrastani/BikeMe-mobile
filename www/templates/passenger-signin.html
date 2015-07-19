@@ -4,14 +4,14 @@
       <form>
         <div>
           <label class="item item-input">
-            <input type="email" placeholder="Email" ng-model="data.email">
+            <input type="text" placeholder="Email" ng-model="passenger.email">
           </label>
           <label class="item item-input">
-            <input type="password" placeholder="Password" ng-model="data.password">
+            <input type="password" placeholder="Password" ng-model="passenger.password">
           </label>
         </div>
         <div class="padding">
-          <button type="submit" class="button button-block button-positive" ng-click="login()">Sign In</button>
+          <button type="submit" name="SigninButton" class="button button-block button-positive" ng-click="signin(passenger)">Sign In</button>
         </div>
       </form>
       <h4><a ui-sref="passengerRegister">New?...Register</a></h4>
