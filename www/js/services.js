@@ -16,7 +16,7 @@ app.factory('CookieHandler', function($cookies){
   var user = null;
   var CookieHandler = {
       set: function(user){
-          $cookies.put('currentUser', user);
+          $cookies['currentUser']=  user;
       },
 
       get: function(){
