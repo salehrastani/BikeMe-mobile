@@ -5,8 +5,7 @@ app.controller('passengerRegisterCtrl', function($scope, $http, $location, $wind
     console.log(registrationData)
     $http.post('http://localhost:3000/passengers', registrationData)
       .success(function(data){
-        CookieHandler.set(data.email);
-        console.log(data)
+        CookieHandler.set(data);
         // $window.location = "#passenger/photo";
     })
       .error(function(){
