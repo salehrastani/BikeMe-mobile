@@ -2,6 +2,8 @@
 
 This is a mobile app connected to [BikeMe-Api](https://github.com/salehrastani/BikeMe-api) that will get you anywhere you wanna go within minutes. Imagine getting off of work and requesting a car from a ridesharing service at rush hour. The traffic is insane and you will be most probably paying a surged price. Meanwhile there are motorcycles splitting lanes and getting to wherever they want without a hassle. You could use BikeMe to get to where you wanna go in minutes.
 
+You can check out this mobile app by downloading [Ionic View](http://view.ionic.io/) and using this ID Number: 61C95485
+
 
 ##User Stories:
 
