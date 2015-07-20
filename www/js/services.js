@@ -11,24 +11,21 @@ app.factory('SessionInjector', function(CookieHandler){
 })
 
 // ----------------------------------------------------
-app.factory('CookieHandler', function($cookies){
+app.factory('CookieHandler', function($cookies, ipCookie){
 
   var user = null;
   var CookieHandler = {
       set: function(user){
           $cookies['currentUser'] =  user;
       },
-
       get: function(){
           var getCookie = $cookies['currentUser'];
           return getCookie
       },
-
-      delete: function(user){
-          $cookies.remove('currentUser');
+      remove: function(user){
+          ipCookie.remove('currentUser');
       }
   };
-
   return CookieHandler;
 });
 

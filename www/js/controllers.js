@@ -4,11 +4,11 @@ app.controller('passengerRegisterCtrl', function($scope, $http, $location, $wind
   $scope.newPassenger = function(registrationData){
     console.log(registrationData)
     $http.post('http://localhost:3000/passengers', registrationData)
-      .success(function(data){
-        CookieHandler.set(data);
-        // $window.location = "#passenger/photo";
+    .success(function(data){
+      CookieHandler.set(data);
+      $window.location = "#passenger/dash";
     })
-      .error(function(){
+    .error(function(){
     });
   };
 })
@@ -20,8 +20,10 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
     $http.post('http://localhost:3000/passengers/login', signinData)
     .success(function(data){
       console.log(data)
-      // CookieHandler.set(data);
-      // $window.location = "#passenger/photo";
+      CookieHandler.set(data);
+      $window.location = "#passenger/dash";
+    })
+    .error(function(){
     })
   }
 })
@@ -61,9 +63,14 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 });
 
 //-----------------------------------------------
-app.controller('passengerChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
-})
+app.controller('passengerAccountCtrl', function($scope, CookieHandler) {
+  $scope.signout = function(){
+    CookieHandler.remove()
+  }
+  $scope.settings = {
+    enableFriends: false
+  };
+});
 
 //-----------------------------------------------
 app.controller('passengerChatDetailCtrl', function($scope, $stateParams, Chats) {
@@ -73,8 +80,6 @@ app.controller('passengerChatDetailCtrl', function($scope, $stateParams, Chats) 
 })
 
 //-----------------------------------------------
-app.controller('passengerAccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: false
-  };
-});
+app.controller('passengerChatsCtrl', function($scope, Chats) {
+  $scope.chats = Chats.all();
+})
