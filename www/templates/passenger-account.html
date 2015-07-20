@@ -2,9 +2,6 @@
   <ion-content>
     <ion-list>
 
-    <ion-toggle ng-click="signout()">
-      <h2>Sign Out</h2>
-    </ion-toggle>
     <ion-toggle  ng-model="settings.enableFriends">
       <h2>Enable Friends</h2>
     </ion-toggle>
@@ -30,8 +27,9 @@
       <h2>About</h2>
       <i class="icon ion-chevron-right icon-accessory"></i>
     </ion-item>
-
-
+    <button class="button button-outline button-block button-assertive" ng-click="confirmSignout()">
+       Sign Out
+    </button>
 
     </ion-list>
   </ion-content>

@@ -63,10 +63,26 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 });
 
 //-----------------------------------------------
-app.controller('passengerAccountCtrl', function($scope, CookieHandler) {
+app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
   $scope.signout = function(){
     CookieHandler.remove()
+    $window.location = "#passenger/signin"
   }
+
+  $scope.confirmSignout = function() {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Signout',
+      template: 'Are you sure?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.signout()
+      } else {
+        console.log('You are not sure');
+      }
+    });
+  };
+
   $scope.settings = {
     enableFriends: false
   };

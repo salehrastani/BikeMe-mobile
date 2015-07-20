@@ -23,6 +23,10 @@ map {
   left: 5%;
 }
 
+.popup-body {
+  text-align: center;
+}
+
 .password-field {
 
 }
