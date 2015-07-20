@@ -16,11 +16,10 @@ app.controller('passengerRegisterCtrl', function($scope, $http, $location, $wind
 // ----------------------------------------------
 app.controller('passengerSigninCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.signin = function(signinData){
-    console.log(signinData);
     $http.post('http://localhost:3000/passengers/login', signinData)
     .success(function(data){
-      console.log(data)
       CookieHandler.set(data);
+      console.log(CookieHandler.get())
       $window.location = "#passenger/dash";
     })
     .error(function(){
@@ -29,13 +28,10 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 
 //-----------------------------------------------
-app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
+app.controller('passengerDashCtrl', function($scope, $ionicLoading, CookieHandler) {
 
-  // $scope.getMyLocation = function(){
-  //   navigator.geolocation.getCurrentPosition(function (position) {
-  //     return position;
-  //   });
-  // }
+  // $scope.currentUser = CookieHandler.get();
+  // console.log($scope.currentUser)
 
   $scope.mapCreated = function(map) {
     $scope.map = map;
@@ -89,13 +85,13 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 });
 
 //-----------------------------------------------
+app.controller('passengerChatsCtrl', function($scope, Chats) {
+  $scope.chats = Chats.all();
+})
+
+//-----------------------------------------------
 app.controller('passengerChatDetailCtrl', function($scope, $stateParams, Chats) {
   // console.log($stateParams)
   $scope.chat = Chats.get($stateParams.chatId);
   // console.log($scope.chat)
-})
-
-//-----------------------------------------------
-app.controller('passengerChatsCtrl', function($scope, Chats) {
-  $scope.chats = Chats.all();
 })
