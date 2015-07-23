@@ -2,13 +2,14 @@
 //-----------------------------------------------
 app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.newPassenger = function(registrationData){
-    console.log(registrationData)
-    $http.post('http://localhost:3000/passengers', registrationData)
+    $http.post('https://bike-me.herokuapp.com/passengers', registrationData)
     .success(function(data){
+      console.log(data)
       CookieHandler.set(data);
       $window.location = "#passenger/dash";
     })
     .error(function(){
+      alert ("Ajax call did not go through!")
     });
   };
 })
@@ -16,13 +17,14 @@ app.controller('passengerRegisterCtrl', function($scope, $http, $location, $wind
 // ----------------------------------------------
 app.controller('passengerSigninCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.signin = function(signinData){
-    $http.post('http://localhost:3000/passengers/login', signinData)
+    $http.post('https://bike-me.herokuapp.com/passengers/login', signinData)
     .success(function(data){
       CookieHandler.set(data);
       console.log(CookieHandler.get())
       $window.location = "#passenger/dash";
     })
     .error(function(){
+      alert ("Ajax call did not go through!")
     })
   }
 })

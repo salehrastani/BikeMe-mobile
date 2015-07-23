@@ -2,15 +2,11 @@
   <ion-content>
     <ion-list>
 
-    <ion-toggle  ng-model="settings.enableFriends">
-      <h2>Share With Friends</h2>
-    </ion-toggle>
-
     <ion-item class="item-icon-right" type="item-text-wrap" href="#">
       <h2>Profile</h2>
       <i class="icon ion-chevron-right icon-accessory"></i>
     </ion-item>
-    <ion-item class="item-icon-right" type="item-text-wrap" href="#">
+    <ion-item class="item-icon-right" type="item-text-wrap" href="#/passengers/payments">
       <h2>Payment</h2>
       <i class="icon ion-chevron-right icon-accessory"></i>
     </ion-item>
@@ -22,6 +18,10 @@
       <h2>Help</h2>
       <i class="icon ion-chevron-right icon-accessory"></i>
     </ion-item>
+
+    <ion-toggle  ng-model="settings.enableFriends">
+      <h2>Share Location With Friends</h2>
+    </ion-toggle>
 
     <button class="button button-outline button-block button-assertive" ng-click="confirmSignout()">
        Sign Out

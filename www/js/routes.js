@@ -68,6 +68,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'passengerAccountCtrl'
   })
 
+  .state('passenger/payments', {
+    url: '/payments',
+    templateUrl: '',
+    controller: ''
+  })
+
 });
 
 
