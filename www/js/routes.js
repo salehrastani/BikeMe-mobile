@@ -43,11 +43,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: "templates/passenger-tabs.html"
   })
 
-
   .state('passenger.dash', {
     url: '/dash',
     templateUrl: 'templates/passenger-dash.html',
     controller: 'passengerDashCtrl'
+  })
+
+  .state('passenger.account', {
+    url: '/account',
+    templateUrl: 'templates/passenger-account.html',
+    controller: 'passengerAccountCtrl'
+  })
+
+  .state('passenger.payments', {
+    url: '/account/payments',
+    templateUrl: 'templates/passenger-payments.html',
+    controller: 'passengerPaymentsCtrl'
   })
 
   .state('passenger.chats', {
@@ -62,19 +73,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'passengerChatDetailCtrl'
   })
 
-  .state('passenger.account', {
-    url: '/account',
-    templateUrl: 'templates/passenger-account.html',
-    controller: 'passengerAccountCtrl'
-  })
-
-  .state('passenger/payments', {
-    url: '/payments',
-    templateUrl: '',
-    controller: ''
-  })
+//------------ Driver Tab ---------------
 
 });
-
-
-//------------ Driver Tab ---------------

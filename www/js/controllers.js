@@ -19,8 +19,8 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
   $scope.signin = function(signinData){
     $http.post('https://bike-me.herokuapp.com/passengers/login', signinData)
     .success(function(data){
+      console.log(data)
       CookieHandler.set(data);
-      console.log(CookieHandler.get())
       $window.location = "#passenger/dash";
     })
     .error(function(){
@@ -31,9 +31,6 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 
 //-----------------------------------------------
 app.controller('passengerDashCtrl', function($scope, $ionicLoading, CookieHandler) {
-
-  // $scope.currentUser = CookieHandler.get();
-  // console.log($scope.currentUser)
 
   $scope.mapCreated = function(map) {
     $scope.map = map;
@@ -85,6 +82,13 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
     enableFriends: false
   };
 });
+
+// ---------------------------------------------
+app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window){
+  $scope.addPayment = function(cardData){
+    console.log(cardData)
+  }
+})
 
 //-----------------------------------------------
 app.controller('passengerChatsCtrl', function($scope, Chats) {
