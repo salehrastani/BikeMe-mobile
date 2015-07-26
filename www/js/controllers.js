@@ -84,8 +84,12 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 });
 
 // ---------------------------------------------
-app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window){
+app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout){
+
+
+
   $scope.addPayment = function(cardData){
+    console.log("we are in the addPayment function")
     console.log(cardData)
   }
 })
