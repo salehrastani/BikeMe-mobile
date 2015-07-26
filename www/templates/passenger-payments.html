@@ -20,7 +20,7 @@
             <input type="text" payments-format="cvc" ng-model="card.cvc" payments-validate="cvc" placeholder="123-4"/>
           </label>
         </div>
-        <div class="padding" ng-if="!card.name || !card.number || !card.expiry || !card.cvc" >
+        <div class="padding" ng-if="!card.name || !card.number || !card.expiry || !card.cvc" ng-click="showAlert()">
           <button  class="button button-outline button-block button-assertive">Add Payment</button>
         </div>
         <div class="padding" ng-if="card.name && card.number && card.expiry && card.cvc">

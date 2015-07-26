@@ -86,7 +86,17 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 // ---------------------------------------------
 app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout){
 
-
+  $scope.showAlert = function() {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Invalid Card',
+      template: 'Please Enter a Valid Card!'
+    });
+    alertPopup.then(function(res) {
+    });
+    $timeout(function() {
+      alertPopup.close();
+    }, 2000);
+  };
 
   $scope.addPayment = function(cardData){
     console.log("we are in the addPayment function")
