@@ -3,24 +3,29 @@
     <div class="center">
       <form>
         <div>
-          <label class="item item-input">
-            <input type="text" placeholder="Name">
+          <label class="item item-input non-password-field">
+            <input type="text" ng-model= "register.name" placeholder="Name">
           </label>
-          <label class="item item-input">
-            <input type="email" placeholder="Email">
+          <label class="item item-input non-password-field">
+            <input type="text" ng-model= "register.email" placeholder="Email">
           </label>
-          <label class="item item-input">
-            <input type="password" placeholder="Password">
+          <label class="item item-input non-password-field">
+            <input type="text" ng-model= "register.phone_number" placeholder="Phone Number">
           </label>
-          <label class="item item-input">
-            <input type="password" placeholder="Password Confirmation">
+          <br>
+          <br>
+          <label class="item item-input password-field">
+            <input type="password" ng-model= "register.password" placeholder="Password">
+          </label>
+          <label class="item item-input password-field">
+            <input type="password" ng-model= "register.password_confirmation" placeholder="Password Confirmation">
           </label>
         </div>
         <div class="padding">
-          <button type="submit" class="button button-block button-positive">Register</button>
+          <button ng-click="newDriver(register)" type="submit" name="RegisterButton" class="button button-block button-positive">Register</button>
         </div>
       </form>
-      <h3><a ui-sref="passengerLogin">Passenger</a></h3>
+      <h3><a ui-sref="passengerSignin">Passenger</a></h3>
     </div>
   </ion-content>
 </ion-view>
