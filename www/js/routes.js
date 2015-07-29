@@ -24,16 +24,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 //--------- Driver Authentication -----------
 
-  .state('driverLogin', {
-    url: '/driver/login',
-    templateUrl: 'templates/driver-login.html'
-  })
-
   .state('driverRegister', {
     url: '/driver/register',
-    templateUrl: 'templates/driver-register.html'
+    templateUrl: 'templates/driver-register.html',
+    controller: 'driverRegisterCtrl'
   })
 
+  .state('driverSignin', {
+    url: '/driver/signin',
+    templateUrl: 'templates/driver-signin.html',
+    controller: 'driverSigninCtrl'
+  })
 //------------ Passenger Tab ---------------
 
 // This route is the parent passenger tabs route

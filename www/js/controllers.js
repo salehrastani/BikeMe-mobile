@@ -1,5 +1,35 @@
 
-//-----------------------------------------------
+app.controller('driverRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
+  $scope.newDriver = function(registrationData){
+    // $http.post('https://bike-me.herokuapp.com/passengers', registrationData)
+    // .success(function(data){
+    //   console.log(data)
+    //   CookieHandler.set(data);
+    //   $window.location = "#passenger/dash";
+    // })
+    // .error(function(){
+    //   alert ("Ajax call did not go through!")
+    // });
+  };
+})
+
+// -----------------------------------------------
+
+app.controller('driverSigninCtrl', function($scope, $http, $location, $window, CookieHandler){
+  $scope.signin = function(signinData){
+    // $http.post('https://bike-me.herokuapp.com/passengers/login', signinData)
+    // .success(function(data){
+    //   console.log(data)
+    //   CookieHandler.set(data);
+    //   $window.location = "#driver/dash";
+    // })
+    // .error(function(){
+    //   alert ("Ajax call did not go through!")
+    // })
+  }
+})
+
+// -----------------------------------------------
 app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.newPassenger = function(registrationData){
     $http.post('https://bike-me.herokuapp.com/passengers', registrationData)
@@ -86,6 +116,12 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 // ---------------------------------------------
 app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout){
 
+  // console.log($scope.addPaymentForm.cardNumber.$card)
+  $scope.addPayment = function(cardData){
+    console.log($scope.type)
+    console.log(cardData)
+  }
+
   $scope.showAlert = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'Invalid Card',
@@ -97,11 +133,6 @@ app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $wind
       alertPopup.close();
     }, 2000);
   };
-
-  $scope.addPayment = function(cardData){
-    console.log("we are in the addPayment function")
-    console.log(cardData)
-  }
 })
 
 //-----------------------------------------------
