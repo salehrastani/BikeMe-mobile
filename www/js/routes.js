@@ -35,7 +35,27 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/driver/driver-signin.html',
     controller: 'driverSigninCtrl'
   })
-//------------ Passenger Tab ---------------
+
+// ----------- Driver Tabs --------------
+  .state('driver', {
+    url: "/driver",
+    abstract: true,
+    templateUrl: "templates/driver/driver-tabs.html"
+  })
+
+    .state('driver.dash', {
+    url: '/dash',
+    templateUrl: 'templates/driver/driver-dash.html',
+    controller: 'driverDashCtrl'
+  })
+
+  .state('driver.account', {
+    url: '/account',
+    templateUrl: 'templates/driver/driver-account.html',
+    controller: 'driverAccountCtrl'
+  })
+
+//------------ Passenger Tabs ---------------
 
 // This route is the parent passenger tabs route
   .state('passenger', {

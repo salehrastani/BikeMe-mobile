@@ -2,11 +2,11 @@
 app.controller('driverRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.newDriver = function(registrationData){
     console.log(registrationData)
-    $http.post('http://localhost:3000/drivers', registrationData)
+    $http.post('https://bike-me.herokuapp.com/drivers', registrationData)
     .success(function(data){
       console.log(data)
       CookieHandler.set(data);
-      // $window.location = "#driver/dash";
+      $window.location = "#/driver/dash";
     })
     .error(function(data){
       alert ("Ajax call did not go through!")
@@ -18,26 +18,51 @@ app.controller('driverRegisterCtrl', function($scope, $http, $location, $window,
 
 app.controller('driverSigninCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.signin = function(signinData){
-    // $http.post('https://bike-me.herokuapp.com/passengers/login', signinData)
-    // .success(function(data){
-    //   console.log(data)
-    //   CookieHandler.set(data);
-    //   $window.location = "#driver/dash";
-    // })
-    // .error(function(){
-    //   alert ("Ajax call did not go through!")
-    // })
+    $http.post('https://bike-me.herokuapp.com/drivers/login', signinData)
+    .success(function(data){
+      console.log(data)
+      CookieHandler.set(data);
+      $window.location = "#/driver/dash";
+    })
+    .error(function(){
+      alert ("You need to register!")
+    })
   }
 })
+
+app.controller('driverAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
+  $scope.signout = function(){
+    CookieHandler.remove()
+    $window.location = "#/driver/signin"
+  }
+
+  $scope.confirmSignout = function() {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Signout',
+      template: 'Are you sure?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.signout()
+      } else {
+        console.log('You are not sure');
+      }
+    });
+  };
+
+  $scope.settings = {
+    enableFriends: false
+  };
+});
 
 // -----------------------------------------------
 app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.newPassenger = function(registrationData){
-    $http.post('http://localhost:3000/passengers', registrationData)
+    $http.post('https://bike-me.herokuapp.com/passengers', registrationData)
     .success(function(data){
       console.log(data)
       CookieHandler.set(data);
-      $window.location = "#passenger/dash";
+      $window.location = "#/passenger/dash";
     })
     .error(function(){
       alert ("Ajax call did not go through!")
@@ -48,14 +73,14 @@ app.controller('passengerRegisterCtrl', function($scope, $http, $location, $wind
 // ----------------------------------------------
 app.controller('passengerSigninCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.signin = function(signinData){
-    $http.post('http://localhost:3000/passengers/login', signinData)
+    $http.post('https://bike-me.herokuapp.com/passengers/login', signinData)
     .success(function(data){
       console.log(data)
       CookieHandler.set(data);
-      $window.location = "#passenger/dash";
+      $window.location = "#/passenger/dash";
     })
     .error(function(){
-      alert ("Ajax call did not go through!")
+      alert ("You need to register!")
     })
   }
 })
@@ -87,6 +112,28 @@ app.controller('driverDashCtrl', function($scope, $ionicLoading) {
     });
   };
 });
+
+
+app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout){
+
+  // console.log($scope.addPaymentForm.cardNumber.$card)
+  $scope.addPayment = function(cardData){
+    console.log($scope.type)
+    console.log(cardData)
+  }
+
+  $scope.showAlert = function() {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Invalid Card',
+      template: 'Please Enter a Valid Card!'
+    });
+    alertPopup.then(function(res) {
+    });
+    $timeout(function() {
+      alertPopup.close();
+    }, 2000);
+  };
+})
 //-----------------------------------------------
 app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 
@@ -119,7 +166,7 @@ app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
 app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
   $scope.signout = function(){
     CookieHandler.remove()
-    $window.location = "#passenger/signin"
+    $window.location = "#/passenger/signin"
   }
 
   $scope.confirmSignout = function() {
