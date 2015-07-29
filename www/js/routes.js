@@ -12,13 +12,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
   .state('passengerRegister', {
     url: '/passenger/register',
-    templateUrl: 'templates/passenger-register.html',
+    templateUrl: 'templates/passenger/passenger-register.html',
     controller: "passengerRegisterCtrl"
   })
 
   .state('passengerSignin', {
     url: '/passenger/signin',
-    templateUrl: 'templates/passenger-signin.html',
+    templateUrl: 'templates/passenger/passenger-signin.html',
     controller: 'passengerSigninCtrl'
   })
 
@@ -26,13 +26,13 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
   .state('driverRegister', {
     url: '/driver/register',
-    templateUrl: 'templates/driver-register.html',
+    templateUrl: 'templates/driver/driver-register.html',
     controller: 'driverRegisterCtrl'
   })
 
   .state('driverSignin', {
     url: '/driver/signin',
-    templateUrl: 'templates/driver-signin.html',
+    templateUrl: 'templates/driver/driver-signin.html',
     controller: 'driverSigninCtrl'
   })
 //------------ Passenger Tab ---------------
@@ -41,36 +41,36 @@ app.config(function($stateProvider, $urlRouterProvider) {
   .state('passenger', {
     url: "/passenger",
     abstract: true,
-    templateUrl: "templates/passenger-tabs.html"
+    templateUrl: "templates/passenger/passenger-tabs.html"
   })
 
   .state('passenger.dash', {
     url: '/dash',
-    templateUrl: 'templates/passenger-dash.html',
+    templateUrl: 'templates/passenger/passenger-dash.html',
     controller: 'passengerDashCtrl'
   })
 
   .state('passenger.account', {
     url: '/account',
-    templateUrl: 'templates/passenger-account.html',
+    templateUrl: 'templates/passenger/passenger-account.html',
     controller: 'passengerAccountCtrl'
   })
 
   .state('passenger.payments', {
     url: '/account/payments',
-    templateUrl: 'templates/passenger-payments.html',
+    templateUrl: 'templates/passenger/passenger-payments.html',
     controller: 'passengerPaymentsCtrl'
   })
 
   .state('passenger.chats', {
     url: '/chats',
-    templateUrl: 'templates/passenger-chats.html',
+    templateUrl: 'templates/passenger/passenger-chats.html',
     controller: 'passengerChatsCtrl'
   })
 
   .state('passenger.chat-detail', {
     url: '/chats/:chatId',
-    templateUrl: 'templates/passenger-chat-detail.html',
+    templateUrl: 'templates/passenger/passenger-chat-detail.html',
     controller: 'passengerChatDetailCtrl'
   })
 
