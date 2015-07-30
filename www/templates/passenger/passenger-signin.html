@@ -1,22 +1,21 @@
-<ion-view view-title="Welcome Passenger">
-  <ion-content>
-    <div class="center">
-      <form>
-        <div>
-          <label class="item item-input">
-            <input type="text" placeholder="Email" ng-model="passenger.email">
-          </label>
-          <label class="item item-input">
-            <input type="password" placeholder="Password" ng-model="passenger.password">
-          </label>
-        </div>
-        <div class="padding">
-          <button type="submit" name="SigninButton" class="button button-block button-positive" ng-click="signin(passenger)">Sign In</button>
-        </div>
-      </form>
-      <h4><a ui-sref="passengerRegister">New?...Register</a></h4>
-      <h3><a ui-sref="driverSignin">Driver</a></h3>
-    </div>
-    <ion-nav-view></ion-nav-view>
-  </ion-content>
-</ion-view>
+<div class="bar bar-header bar-stable">
+  <h1 class="title">Welcome</h1>
+</div>
+  <div class="center">
+    <form class="list list-inset">
+      <div>
+        <label class="item item-input">
+          <input type="text" placeholder="Email" ng-model="passenger.email">
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="passenger.password">
+        </label>
+      </div>
+      <div class="padding">
+        <button type="submit" name="SigninButton" class="button button-block button-positive" ng-click="signin(passenger)">Sign In</button>
+        <button class="button button-block button-positive" ui-sref="passengerRegister">Register</button>
+      </div>
+    </form>
+  <button class="button button-outline button-large button-dark" ui-sref="driverSignin">Become a Driver</button>
+</div>
+<ion-nav-view></ion-nav-view>
