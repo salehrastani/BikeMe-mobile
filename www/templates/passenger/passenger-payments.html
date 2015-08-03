@@ -21,7 +21,7 @@
           </label>
         </div>
         <div class="padding" ng-if="!card.name || !card.number || !card.expiry || !card.cvc" ng-click="showAlert()">
-          <button  class="button button-outline button-block button-assertive">Add Payment</button>
+          <button  class="button button-outline button-block button-balanced">Add Payment</button>
         </div>
         <div class="padding" ng-if="card.name && card.number && card.expiry && card.cvc">
           <button type="submit" name="AddPaymentButton" class="button button-block button-balanced" ng-click="addPayment(card)">Add Payment</button>

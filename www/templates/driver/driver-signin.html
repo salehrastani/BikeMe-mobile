@@ -13,10 +13,11 @@
         </div>
         <div class="padding">
           <button type="submit" name="SigninButton" class="button button-block button-positive" ng-click="signin(driver)">Sign In</button>
+          <button class="button button-block button-positive" ui-sref="driverRegister">Register</button>
         </div>
       </form>
-      <h4><a ui-sref="driverRegister">New?...Register</a></h4>
-      <h3><a ui-sref="passengerSignin">Passenger</a></h3>
+
+      <button class="button button-outline button-large button-positive" ui-sref="passengerSignin">Become a Passenger</button>
     </div>
     <ion-nav-view></ion-nav-view>
   </ion-content>
