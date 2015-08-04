@@ -1,4 +1,10 @@
+app.controller('frontPageCtrl', function($location, $window, $timeout){
 
+   $timeout(function() {
+      $window.location = '#/passenger/signin';
+    }, 2000);
+})
+// ---------------------------------------------
 app.controller('driverRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
   $scope.newDriver = function(registrationData){
     console.log(registrationData)

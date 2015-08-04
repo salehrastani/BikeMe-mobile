@@ -4,23 +4,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  $urlRouterProvider.otherwise('passenger/signin');
-
-//--------- Passenger Authentication -----------
+// ---------- General ------------------
+  // $urlRouterProvider.otherwise('passenger/signin');
 
   $stateProvider
 
-  .state('passengerRegister', {
-    url: '/passenger/register',
-    templateUrl: 'templates/passenger/passenger-register.html',
-    controller: "passengerRegisterCtrl"
+  .state('frontPage', {
+    url: '',
+    templateUrl: 'templates/front-page.html',
+    controller: 'frontPageCtrl'
   })
 
-  .state('passengerSignin', {
-    url: '/passenger/signin',
-    templateUrl: 'templates/passenger/passenger-signin.html',
-    controller: 'passengerSigninCtrl'
-  })
 
 //--------- Driver Authentication -----------
 
@@ -37,6 +31,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   })
 
 // ----------- Driver Tabs --------------
+// This route is the parent driver tabs route
   .state('driver', {
     url: "/driver",
     abstract: true,
@@ -53,6 +48,20 @@ app.config(function($stateProvider, $urlRouterProvider) {
     url: '/account',
     templateUrl: 'templates/driver/driver-account.html',
     controller: 'driverAccountCtrl'
+  })
+
+//--------- Passenger Authentication -----------
+
+  .state('passengerRegister', {
+    url: '/passenger/register',
+    templateUrl: 'templates/passenger/passenger-register.html',
+    controller: "passengerRegisterCtrl"
+  })
+
+  .state('passengerSignin', {
+    url: '/passenger/signin',
+    templateUrl: 'templates/passenger/passenger-signin.html',
+    controller: 'passengerSigninCtrl'
   })
 
 //------------ Passenger Tabs ---------------
@@ -94,6 +103,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'passengerChatDetailCtrl'
   })
 
-//------------ Driver Tab ---------------
+
+
 
 });
