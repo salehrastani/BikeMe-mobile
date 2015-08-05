@@ -139,6 +139,16 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
       alertPopup.close();
     }, 2000);
   };
+
+  $scope.handleStripe = function(status, response){
+    if(response.error) {
+      alert ("There was an error, fix it!")
+    } else {
+      console.log("Got stripe token, now you can charge it!")
+      console.log(response)
+      // token = response.id
+    }
+  }
 })
 //-----------------------------------------------
 app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
@@ -199,6 +209,7 @@ app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $wind
 
   // console.log($scope.addPaymentForm.cardNumber.$card)
   $scope.addPayment = function(cardData){
+    console.log("were int he addpayment method of passengers")
     console.log($scope.type)
     console.log(cardData)
   }
@@ -214,6 +225,17 @@ app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $wind
       alertPopup.close();
     }, 2000);
   };
+
+  $scope.handleStripe = function(status, response){
+    console.log("were in the passengers handlestripe function")
+    if(response.error) {
+      console.log(response)
+    } else {
+      console.log("Got stripe token, now you can charge it!")
+      console.log(response)
+      // token = response.id
+    }
+  }
 })
 
 //-----------------------------------------------
