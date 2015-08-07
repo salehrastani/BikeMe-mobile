@@ -140,9 +140,10 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
     }, 2000);
   };
 
-  $scope.handleStripe = function(status, response){
+    $scope.handleStripe = function(status, response){
+    console.log("were in the drivers handlestripe function")
     if(response.error) {
-      alert ("There was an error, fix it!")
+      console.log(response)
     } else {
       console.log("Got stripe token, now you can charge it!")
       console.log(response)

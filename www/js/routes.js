@@ -38,10 +38,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: "templates/driver/driver-tabs.html"
   })
 
-    .state('driver.dash', {
+  .state('driver.dash', {
     url: '/dash',
     templateUrl: 'templates/driver/driver-dash.html',
     controller: 'driverDashCtrl'
+  })
+
+  .state('driver.payments', {
+    url: '/account/payments',
+    templateUrl: 'templates/driver/driver-payments.html',
+    controller: 'driverPaymentsCtrl'
   })
 
   .state('driver.account', {
@@ -105,5 +111,5 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 
 
-
+// ------------- Ending curly braces for <app.config>
 });
