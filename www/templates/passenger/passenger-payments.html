@@ -16,8 +16,11 @@
              <input type="text" class="input-block-level" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type" placeholder="123-4"/>
           </label>
         </div>
-        <div class="padding" >
+        <div class="padding" ng-if="name && number && expiry && cvc">
           <button type="submit" name="AddPaymentButton" class="button button-block button-balanced">Add Payment</button>
+        </div>
+        <div class="padding" ng-if="!name ||!number || !expiry || !cvc ">
+          <button class="button button-outline button-balanced">Add Payment</button>
         </div>
       </form>
     </div>

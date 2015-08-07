@@ -128,10 +128,22 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
     console.log(cardData)
   }
 
-  $scope.showAlert = function() {
+  $scope.invalidCardAlert = function() {
     var alertPopup = $ionicPopup.alert({
       title: 'Invalid Card',
-      template: 'Please Enter a Valid Card!'
+      template: 'Enter a valid card number!'
+    });
+    alertPopup.then(function(res) {
+    });
+    $timeout(function() {
+      alertPopup.close();
+    }, 2000);
+  };
+
+  $scope.stripeErrorAlert = function(message) {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Invalid Credentials',
+      template: message
     });
     alertPopup.then(function(res) {
     });
@@ -144,6 +156,11 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
     console.log("were in the drivers handlestripe function")
     if(response.error) {
       console.log(response)
+      if (response["error"]["message"]){
+        $scope.stripeErrorAlert(response["error"]["message"])
+      } else {
+        $scope.invalidCardAlert();
+      }
     } else {
       console.log("Got stripe token, now you can charge it!")
       console.log(response)
