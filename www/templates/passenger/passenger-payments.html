@@ -7,13 +7,13 @@
             <input type="text" ng-model="name" placeholder="John Doe"/>
           </label>
           <label class="item item-input"> Number
-            <input type="text" name="cardNumber" payments-format="card" ng-model="number" payments-validate="card" payments-type-model="type" placeholder="1234 5678 9123 4567" ng-class="myForm.number.$card.type"/>
+             <input type="text" class="input-block-level" ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" placeholder="1234 5678 9123 4567" ng-class="myForm.number.$card.type"/>
           </label>
           <label class="item item-input">Expiration
-             <input type="text" payments-format="expiry" ng-model="expiry" payments-validate="expiry" placeholder="mm/yyyy"/>
+             <input type="text" class="input-block-level" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="mm/yyyy"/>
           </label>
           <label class="item item-input"> CVC
-            <input type="text" payments-format="cvc" ng-model="cvc" payments-validate="cvc" payments-type-model="type" placeholder="123-4"/>
+             <input type="text" class="input-block-level" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type" placeholder="123-4"/>
           </label>
         </div>
         <div class="padding" >
