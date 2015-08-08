@@ -120,7 +120,7 @@ app.controller('driverDashCtrl', function($scope, $ionicLoading) {
 });
 
 
-app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout){
+app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout, StripeErrorAlerts){
 
   // console.log($scope.addPaymentForm.cardNumber.$card)
   $scope.addPayment = function(cardData){
@@ -128,42 +128,14 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
     console.log(cardData)
   }
 
-  $scope.invalidCardAlert = function() {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Invalid Card',
-      template: 'Enter a valid card number!'
-    });
-    alertPopup.then(function(res) {
-    });
-    $timeout(function() {
-      alertPopup.close();
-    }, 2000);
-  };
-
-  $scope.stripeErrorAlert = function(message) {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Invalid Credentials',
-      template: message
-    });
-    alertPopup.then(function(res) {
-    });
-    $timeout(function() {
-      alertPopup.close();
-    }, 2000);
-  };
-
-    $scope.handleStripe = function(status, response){
-    console.log("were in the drivers handlestripe function")
+  $scope.handleStripe = function(status, response){
     if(response.error) {
-      console.log(response)
       if (response["error"]["message"]){
-        $scope.stripeErrorAlert(response["error"]["message"])
+        StripeErrorAlerts.invalidStripeAlert(response["error"]["message"])
       } else {
-        $scope.invalidCardAlert();
+        StripeErrorAlerts.invalidFormAlert();
       }
     } else {
-      console.log("Got stripe token, now you can charge it!")
-      console.log(response)
       // token = response.id
     }
   }
@@ -223,7 +195,7 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 });
 
 // ---------------------------------------------
-app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout){
+app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout, StripeErrorAlerts){
 
   // console.log($scope.addPaymentForm.cardNumber.$card)
   $scope.addPayment = function(cardData){
@@ -232,25 +204,14 @@ app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $wind
     console.log(cardData)
   }
 
-  $scope.showAlert = function() {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Invalid Card',
-      template: 'Please Enter a Valid Card!'
-    });
-    alertPopup.then(function(res) {
-    });
-    $timeout(function() {
-      alertPopup.close();
-    }, 2000);
-  };
-
-  $scope.handleStripe = function(status, response){
-    console.log("were in the passengers handlestripe function")
+ $scope.handleStripe = function(status, response){
     if(response.error) {
-      console.log(response)
+      if (response["error"]["message"]){
+        StripeErrorAlerts.invalidStripeAlert(response["error"]["message"])
+      } else {
+        StripeErrorAlerts.invalidFormAlert();
+      }
     } else {
-      console.log("Got stripe token, now you can charge it!")
-      console.log(response)
       // token = response.id
     }
   }

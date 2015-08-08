@@ -1,7 +1,7 @@
 <ion-view view-title="Payments">
   <ion-content>
     <div class="center">
-      <form name="myForm" stripe-form="handleStripe" >
+      <form stripe-form="handleStripe" >
         <div>
           <label class="item item-input"> Cardholder
             <input type="text" ng-model="name" placeholder="John Doe"/>
@@ -17,10 +17,10 @@
           </label>
         </div>
         <div class="padding" ng-if="name && number && expiry && cvc">
-          <button type="submit" name="AddPaymentButton" class="button button-block button-balanced">Add Payment</button>
+          <button type="submit" class="button button-block button-balanced">Add Payment</button>
         </div>
-        <div class="padding" ng-if="!name ||!number || !expiry || !cvc ">
-          <button class="button button-block button-outline button-balanced">Add Payment</button>
+        <div class="padding" ng-if="!name ||!number || !expiry || !cvc">
+          <button type="submit" class="button button-block button-outline button-balanced">Add Payment</button>
         </div>
       </form>
     </div>

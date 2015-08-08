@@ -30,17 +30,38 @@ app.factory('CookieHandler', function($cookies, ipCookie){
 });
 
 // -------------------------------------------------------
-// app.factory('SessionService', function(CookieHandler, $http){
-//   return function(authInfo){
-//     $http.post('http://localhost:3000/passengers/signin', authInfo)
-//     .success(function(data){
-//       CookieHandler.set(data.user);
-//     })
-//       .error(function(){
-//           //do something
-//     });
-//   };
-// });
+
+app.factory('StripeErrorAlerts', function($ionicPopup, $timeout){
+
+ var StripeErrorAlerts = {
+    invalidFormAlert: function() {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Invalid Card',
+        template: 'Enter a valid card number!'
+      });
+      alertPopup.then(function(res) {
+      });
+      $timeout(function() {
+        alertPopup.close();
+      }, 2000);
+    },
+
+    invalidStripeAlert: function(message) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Invalid Credentials',
+        template: message
+      });
+      alertPopup.then(function(res) {
+      });
+      $timeout(function() {
+        alertPopup.close();
+      }, 2500);
+    }
+  }
+
+  return StripeErrorAlerts;
+
+})
 
 // ------------------------------------------------------
 app.factory('Chats', function() {
