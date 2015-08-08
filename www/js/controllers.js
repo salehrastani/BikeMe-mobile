@@ -122,12 +122,6 @@ app.controller('driverDashCtrl', function($scope, $ionicLoading) {
 
 app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout, StripeErrorAlerts){
 
-  // console.log($scope.addPaymentForm.cardNumber.$card)
-  $scope.addPayment = function(cardData){
-    console.log($scope.type)
-    console.log(cardData)
-  }
-
   $scope.handleStripe = function(status, response){
     if(response.error) {
       if (response["error"]["message"]){
@@ -196,13 +190,6 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 
 // ---------------------------------------------
 app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout, StripeErrorAlerts){
-
-  // console.log($scope.addPaymentForm.cardNumber.$card)
-  $scope.addPayment = function(cardData){
-    console.log("were int he addpayment method of passengers")
-    console.log($scope.type)
-    console.log(cardData)
-  }
 
  $scope.handleStripe = function(status, response){
     if(response.error) {

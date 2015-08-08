@@ -4,7 +4,7 @@ app.directive('map', function() {
     scope: {
       onCreate: '&'
     },
-    link: function ($scope, $element, $attr) {
+    link: function ($scope, $element, $attr, $location) {
       function initialize() {
 
         var options = {
@@ -28,9 +28,19 @@ app.directive('map', function() {
             streetViewControl: false,
           };
 
+          var currentUrl = location
+          var userIcon = function(){
+            if(currentUrl == "#/driver/dash"){
+              return "img/driver-icon-64.png"
+            } else {
+              return "img/passenger-icon-64.png"
+            }
+          }
+
           var map = new google.maps.Map($element[0], mapOptions);
+
           var image = {
-            url: "img/motor-bike-64.png",
+            url: userIcon(),
           // size: new google.maps.Size(71, 71),
           // origin: new google.maps.Point(0, 0),
           // anchor: new google.maps.Point(17, 34),
