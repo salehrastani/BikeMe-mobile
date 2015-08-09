@@ -30,7 +30,7 @@ app.directive('map', function() {
 
           var currentUrl = location
           var userIcon = function(){
-            if(currentUrl == "#/driver/dash"){
+            if(currentUrl === "#/driver/dash"){
               return "img/driver-icon-64.png"
             } else {
               return "img/passenger-icon-64.png"

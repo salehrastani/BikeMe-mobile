@@ -36,30 +36,6 @@ app.controller('driverSigninCtrl', function($scope, $http, $location, $window, C
   }
 })
 
-app.controller('driverAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
-  $scope.signout = function(){
-    CookieHandler.remove()
-    $window.location = "#/driver/signin"
-  }
-
-  $scope.confirmSignout = function() {
-    var confirmPopup = $ionicPopup.confirm({
-      title: 'Signout',
-      template: 'Are you sure?'
-    });
-    confirmPopup.then(function(res) {
-      if(res) {
-        $scope.signout()
-      } else {
-        console.log('You are not sure');
-      }
-    });
-  };
-
-  $scope.settings = {
-    enableFriends: false
-  };
-});
 
 // -----------------------------------------------
 app.controller('passengerRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
@@ -119,6 +95,32 @@ app.controller('driverDashCtrl', function($scope, $ionicLoading) {
   };
 });
 
+app.controller('driverAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
+
+  $scope.signout = function(){
+    CookieHandler.remove()
+    $window.location = "#/driver/signin"
+  }
+
+  $scope.confirmSignout = function() {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Signout',
+      template: 'Are you sure?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        $scope.signout()
+      } else {
+        console.log('You are not sure');
+      }
+    });
+  };
+
+  $scope.settings = {
+    enableFriends: false
+  };
+});
+
 
 app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout, StripeErrorAlerts){
 
@@ -130,7 +132,15 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
         StripeErrorAlerts.invalidFormAlert();
       }
     } else {
-      // token = response.id
+      var stripeData = {stripe_token: response.id}
+      $http.post('https://bike-me.herokuapp.com/drivers/stripe', stripeData)
+      .success(function(data){
+        console.log(data)
+      $window.location = "#/driver/account";
+    })
+    .error(function(){
+      console.log("Stripe token did not reach backend!")
+    })
     }
   }
 })
@@ -191,7 +201,7 @@ app.controller('passengerAccountCtrl', function($scope, $window, $ionicPopup, Co
 // ---------------------------------------------
 app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $window, $ionicPopup, $timeout, StripeErrorAlerts){
 
- $scope.handleStripe = function(status, response){
+  $scope.handleStripe = function(status, response){
     if(response.error) {
       if (response["error"]["message"]){
         StripeErrorAlerts.invalidStripeAlert(response["error"]["message"])
@@ -199,7 +209,15 @@ app.controller('passengerPaymentsCtrl', function($scope, $http, $location, $wind
         StripeErrorAlerts.invalidFormAlert();
       }
     } else {
-      // token = response.id
+      var stripeData = {stripe_token: response.id}
+      $http.post('https://bike-me.herokuapp.com/passengers/stripe', stripeData)
+      .success(function(data){
+        console.log(data)
+        $window.location = "#/passenger/account";
+      })
+      .error(function(){
+        console.log("Stripe token did not reach backend!")
+      })
     }
   }
 })

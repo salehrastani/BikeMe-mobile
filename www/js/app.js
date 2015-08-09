@@ -26,3 +26,5 @@ var app = angular.module('bikeme', ['ionic', 'ngCookies', 'ipCookie', 'angularPa
   $httpProvider.interceptors.push('SessionInjector');
 })
 
+
+

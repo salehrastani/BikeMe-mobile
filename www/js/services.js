@@ -2,6 +2,8 @@ app.factory('SessionInjector', function(CookieHandler){
   return {
     request: function(config) {
       if (CookieHandler.get() !== undefined) {
+        // console.log("we are checking to get cookie in sessionInjector")
+        // console.log(CookieHandler.get().email)
         config.headers['token'] = CookieHandler.get().token;
         config.headers['email'] = CookieHandler.get().email;
       }
@@ -16,10 +18,12 @@ app.factory('CookieHandler', function($cookies, ipCookie){
   var user = null;
   var CookieHandler = {
       set: function(user){
-          $cookies['currentUser'] =  user;
+          ipCookie('currentUser', user)
+          // $cookies['currentUser'] =  user;
       },
       get: function(){
-          var getCookie = $cookies['currentUser'];
+          var getCookie = ipCookie('currentUser')
+          // var getCookie = $cookies['currentUser'];
           return getCookie
       },
       remove: function(user){
