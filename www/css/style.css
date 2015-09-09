@@ -30,7 +30,7 @@ map {
 .on-top {
   position: absolute;
   z-index: 1;
-  bottom: 10%;
+  bottom: 3%;
   left: 5%;
 }
 .popup-body {
