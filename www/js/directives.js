@@ -75,8 +75,8 @@ app.directive('map', function() {
 
         watchCurrentPosition = function(){
           navigator.geolocation.watchPosition(function(position){
-            myMarker.setPosition({lat:position.coords.latitude, lng:position.coords.longitude});
-            map.setCenter = {lat:position.coords.latitude, lng:position.coords.longitude}
+            myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
           });
         }
 
