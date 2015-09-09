@@ -50,7 +50,6 @@ app.directive('map', function() {
           var marker = new google.maps.Marker({
             map: map,
             position: new google.maps.LatLng(showMap.coords.latitude, showMap.coords.longitude),
-            animation: google.maps.Animation.DROP,
             icon: image
           });
 
