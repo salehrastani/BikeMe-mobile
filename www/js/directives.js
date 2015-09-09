@@ -5,22 +5,22 @@ app.directive('map', function() {
       onCreate: '&'
     },
     link: function ($scope, $element, $attr, $location) {
-      function initialize() {
+      function initializeNavArguments() {
 
-        var options = {
+        options = {
           enableHighAccuracy: true,
           timeout: 7000,
           maximumAge: 0
         };
 
-        var fail = function(){
+        fail = function(){
           return;
         }
 
-        navigator.geolocation.getCurrentPosition(function (position) {
+        successCallback = function (showMap) {
 
           var mapOptions = {
-            center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            center: new google.maps.LatLng(showMap.coords.latitude, showMap.coords.longitude),
             zoom: 16,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: false,
@@ -28,8 +28,10 @@ app.directive('map', function() {
             streetViewControl: false,
           };
 
-          var currentUrl = location
+          var map = new google.maps.Map($element[0], mapOptions);
+
           var userIcon = function(){
+            var currentUrl = location.hash
             if(currentUrl === "#/driver/dash"){
               return "img/driver-icon-64.png"
             } else {
@@ -37,19 +39,17 @@ app.directive('map', function() {
             }
           }
 
-          var map = new google.maps.Map($element[0], mapOptions);
-
           var image = {
             url: userIcon(),
-          // size: new google.maps.Size(71, 71),
-          // origin: new google.maps.Point(0, 0),
-          // anchor: new google.maps.Point(17, 34),
-          scaledSize: new google.maps.Size(30, 30)
+            scaledSize: new google.maps.Size(30, 30)
+            // size: new google.maps.Size(71, 71),
+            // origin: new google.maps.Point(0, 0),
+            // anchor: new google.maps.Point(17, 34),
           };
 
           var marker = new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            position: new google.maps.LatLng(showMap.coords.latitude, showMap.coords.longitude),
             animation: google.maps.Animation.DROP,
             icon: image
           });
@@ -61,14 +61,24 @@ app.directive('map', function() {
             e.preventDefault();
             return false;
           });
-        },fail, options);
+
+        }
+
+      }
+
+      function initializeNavMap(){
+        navigator.geolocation.watchPosition(successCallback,fail, options);
       }
 
       if (document.readyState === "complete") {
-        initialize();
+        initializeNavArguments();
+        initializeNavMap()
       } else {
-        google.maps.event.addDomListener(window, 'load', initialize);
+        google.maps.event.addDomListener(window, 'load', initializeNavArguments);
       }
-    }
-  }
-});
+
+    } // link function closes
+
+  } // return in directive function closes
+
+}); // app.directive function closes

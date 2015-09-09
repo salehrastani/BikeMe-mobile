@@ -76,10 +76,6 @@ app.controller('driverDashCtrl', function($scope, $ionicLoading) {
 
   $scope.centerOnMe = function () {
     console.log("Centering");
-    if (!$scope.map) {
-      return;
-    }
-
     $scope.loading = $ionicLoading.show({
       content: 'Getting current location...',
       showBackdrop: false

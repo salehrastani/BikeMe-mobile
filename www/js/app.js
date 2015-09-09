@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var app = angular.module('bikeme', ['ionic', 'ngCookies', 'ipCookie', 'angularPayments'])
+var app = angular.module('bikeme', ['ionic', 'ngCookies', 'ipCookie', 'angularPayments', 'ngMap'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
