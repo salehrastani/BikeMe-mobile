@@ -19,8 +19,10 @@ app.directive('map', function() {
 
         successCallback = function (showMap) {
 
+          var myLatLng = {lat: showMap.coords.latitude, lng: showMap.coords.longitude};
+
           var mapOptions = {
-            center: new google.maps.LatLng(showMap.coords.latitude, showMap.coords.longitude),
+            center: myLatLng,
             zoom: 16,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             zoomControl: false,
@@ -39,18 +41,15 @@ app.directive('map', function() {
             }
           }
 
-          var image = {
+          var myImage = {
             url: userIcon(),
             scaledSize: new google.maps.Size(30, 30)
-            // size: new google.maps.Size(71, 71),
-            // origin: new google.maps.Point(0, 0),
-            // anchor: new google.maps.Point(17, 34),
           };
 
-          var marker = new google.maps.Marker({
+          var myMarker = new google.maps.Marker({
             map: map,
-            position: new google.maps.LatLng(showMap.coords.latitude, showMap.coords.longitude),
-            icon: image
+            position: myLatLng,
+            icon: myImage
           });
 
           $scope.onCreate({map: map});
@@ -61,9 +60,9 @@ app.directive('map', function() {
             return false;
           });
 
-        }
+        } // successCallback function closes
 
-      }
+      } // initializeNavArguments function closes
 
       function initializeNavMap(){
         navigator.geolocation.watchPosition(successCallback,fail, options);
@@ -80,4 +79,4 @@ app.directive('map', function() {
 
   } // return in directive function closes
 
-}); // app.directive function closes
+}); // directive function closes
