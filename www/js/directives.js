@@ -17,9 +17,9 @@ app.directive('map', function() {
           return;
         }
 
-        navigator.geolocation.watchPosition(function (showMap) {
+        navigator.geolocation.getCurrentPosition(function (position) {
 
-          var myLatLng = {lat: showMap.coords.latitude, lng: showMap.coords.longitude};
+          var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
 
           var mapOptions = {
             center: myLatLng,
@@ -69,7 +69,16 @@ app.directive('map', function() {
             return false;
           });
 
-        },fail, options) // watchPosition function closes
+          watchCurrentPosition()
+
+        },fail, options) // getCurrentPosition function closes
+
+        watchCurrentPosition = function(){
+          navigator.geolocation.watchPosition(function(position){
+            myMarker.setPosition({lat:position.coords.latitude, lng:position.coords.longitude});
+            map.setCenter = {lat:position.coords.latitude, lng:position.coords.longitude}
+          });
+        }
 
       } // initialize function closes
 
