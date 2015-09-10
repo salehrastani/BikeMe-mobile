@@ -68,7 +68,7 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope, $ionicLoading){
+app.controller('driverDashCtrl', function($scope){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
@@ -79,7 +79,6 @@ app.controller('driverDashCtrl', function($scope, $ionicLoading){
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
     });
   };
-
 });
 
 app.controller('driverAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {

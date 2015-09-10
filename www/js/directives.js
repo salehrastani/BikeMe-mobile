@@ -69,13 +69,13 @@ app.directive('map', function() {
             return false;
           });
 
-          watchCurrentPosition()
+          watchCurrentPosition(myMarker)
 
         },fail, options) // getCurrentPosition function closes
 
-        watchCurrentPosition = function(){
+        watchCurrentPosition = function(marker){
           navigator.geolocation.watchPosition(function(position){
-            myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            marker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
             map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
           });
         }
