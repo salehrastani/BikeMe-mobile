@@ -68,25 +68,15 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope, $ionicLoading) {
+app.controller('driverDashCtrl', function($scope){
 
-  $scope.mapCreated = function(map) {
+  $scope.mapCreated = function(map){
     $scope.map = map;
   };
 
-  $scope.centerOnMe = function () {
-    console.log("Centering");
-    $scope.loading = $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: false
-    });
-
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log('Got your location');
+  $scope.centerOnMe = function(){
+    navigator.geolocation.getCurrentPosition(function(pos){
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      $ionicLoading.hide();
-    }, function (error) {
-      alert('Unable to get location: ' + error.message);
     });
   };
 });

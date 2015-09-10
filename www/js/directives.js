@@ -5,7 +5,7 @@ app.directive('map', function() {
       onCreate: '&'
     },
     link: function ($scope, $element, $attr, $location) {
-      function initializeNavArguments() {
+      function initialize() {
 
         options = {
           enableHighAccuracy: true,
@@ -17,9 +17,9 @@ app.directive('map', function() {
           return;
         }
 
-        successCallback = function (showMap) {
+        navigator.geolocation.getCurrentPosition(function (position) {
 
-          var myLatLng = {lat: showMap.coords.latitude, lng: showMap.coords.longitude};
+          var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
 
           var mapOptions = {
             center: myLatLng,
@@ -52,6 +52,15 @@ app.directive('map', function() {
             icon: myImage
           });
 
+          var driverMarker = new google.maps.Marker({
+            map: map,
+            position: {lat: 37.865961 , lng: -122.278161},
+            icon: {
+              url: "img/driver-icon-64.png",
+              scaledSize: new google.maps.Size(26, 26)
+            }
+          });
+
           $scope.onCreate({map: map});
 
           // Stop the side bar from dragging when mousedown/tapdown on the map
@@ -60,23 +69,27 @@ app.directive('map', function() {
             return false;
           });
 
-        } // successCallback function closes
+          watchCurrentPosition(myMarker)
 
-      } // initializeNavArguments function closes
+        },fail, options) // getCurrentPosition function closes
 
-      function initializeNavMap(){
-        navigator.geolocation.watchPosition(successCallback,fail, options);
-      }
+        watchCurrentPosition = function(marker){
+          navigator.geolocation.watchPosition(function(position){
+            marker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
+          });
+        }
+
+      } // initialize function closes
 
       if (document.readyState === "complete") {
-        initializeNavArguments();
-        initializeNavMap()
+        initialize()
       } else {
-        google.maps.event.addDomListener(window, 'load', initializeNavArguments);
+        google.maps.event.addDomListener(window, 'load', initialize);
       }
 
     } // link function closes
 
-  } // return in directive function closes
+  } // return in map directive function closes
 
-}); // directive function closes
+}); // map directive function closes
