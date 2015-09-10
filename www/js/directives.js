@@ -4,7 +4,7 @@ app.directive('map', function() {
     scope: {
       onCreate: '&'
     },
-    link: function ($scope, $element, $attr, $location) {
+    link: function (scope, element, attr, $location) {
       function initialize() {
 
         options = {
@@ -18,9 +18,9 @@ app.directive('map', function() {
         }
 
         navigator.geolocation.getCurrentPosition(function (position) {
-
+          console.log("getCurrentPosition function")
           var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
-
+          scope.$parent.sendLocation(myLatLng);
           var mapOptions = {
             center: myLatLng,
             zoom: 16,
@@ -30,7 +30,7 @@ app.directive('map', function() {
             streetViewControl: false,
           };
 
-          var map = new google.maps.Map($element[0], mapOptions);
+          var map = new google.maps.Map(element[0], mapOptions);
 
           var userIcon = function(){
             var currentUrl = location.hash
@@ -61,27 +61,31 @@ app.directive('map', function() {
             }
           });
 
-          $scope.onCreate({map: map});
+          scope.onCreate({map: map});
 
           // Stop the side bar from dragging when mousedown/tapdown on the map
-          google.maps.event.addDomListener($element[0], 'mousedown', function (e) {
+          google.maps.event.addDomListener(element[0], 'mousedown', function (e) {
             e.preventDefault();
             return false;
           });
 
-          watchCurrentPosition(myMarker)
+          // watchCurrentPosition(myMarker, map)
+          // availableDriverMarkers(map);
+        // watchCurrentPosition = function(marker, map){
+          navigator.geolocation.watchPosition(function(position){
+            console.log("watchPosition is happening")
+            var currentLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
+            scope.$parent.sendLocation(currentLatLng); // send to DB
+            myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)); // Display on map
+            scope.$parent.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
+          });
+        // }
 
         },fail, options) // getCurrentPosition function closes
 
-        watchCurrentPosition = function(marker){
-          navigator.geolocation.watchPosition(function(position){
-            marker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
-            map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
-          });
-        }
 
       } // initialize function closes
-
+      // fire initialize function when the dom and html is ready, else wait till its ready
       if (document.readyState === "complete") {
         initialize()
       } else {

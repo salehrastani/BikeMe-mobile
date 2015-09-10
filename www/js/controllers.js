@@ -131,29 +131,27 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
   }
 })
 //-----------------------------------------------
-app.controller('passengerDashCtrl', function($scope, $ionicLoading) {
+app.controller('passengerDashCtrl', function($scope, $http) {
+  console.log("passengers dash controller")
 
-  $scope.mapCreated = function(map) {
+  $scope.sendLocation = function(mylatlng){
+    $http.post('https://bike-me.herokuapp.com/locations/create', mylatlng)
+    .success(function(data){
+      console.log(data)
+    }).error(function(){
+      alert ("Please try again!")
+    })
+  }
+
+  $scope.mapCreated = function(map){
     $scope.map = map;
   };
 
-  $scope.centerOnMe = function () {
-    console.log("Centering");
-    if (!$scope.map) {
-      return;
-    }
-
-    $scope.loading = $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: false
-    });
-
+  $scope.centerOnMe = function(map){
+    console.log("in centerOnMe")
     navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log('Got your location');
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      $ionicLoading.hide();
-    }, function (error) {
-      alert('Unable to get location: ' + error.message);
+      console.log("in getCurrentPosition")
+      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
     });
   };
 });
