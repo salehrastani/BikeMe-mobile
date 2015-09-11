@@ -2,7 +2,7 @@ app.controller('frontPageCtrl', function($location, $window, $timeout){
 
    $timeout(function() {
       $window.location = '#/passenger/signin';
-    }, 2000);
+    }, 3500);
 })
 // ---------------------------------------------
 app.controller('driverRegisterCtrl', function($scope, $http, $location, $window, CookieHandler){
