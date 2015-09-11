@@ -135,11 +135,11 @@ app.controller('passengerDashCtrl', function($scope, $http) {
   console.log("passengers dash controller")
 
   $scope.sendLocation = function(mylatlng){
-    $http.post('https://bike-me.herokuapp.com/locations/create', mylatlng)
+    $http.post('http://bike-me.herokuapp.com/passengers/location', mylatlng)
     .success(function(data){
       console.log(data)
     }).error(function(){
-      alert ("Please try again!")
+      console.log("location data wasnt sent to DB")
     })
   }
 
