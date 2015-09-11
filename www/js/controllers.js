@@ -68,11 +68,20 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope){
+app.controller('driverDashCtrl', function($scope, $http){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
   };
+
+  $scope.sendLocation = function(mylatlng){
+    $http.post('http://bike-me.herokuapp.com/drivers/location', mylatlng)
+    .success(function(data){
+      console.log(data)
+    }).error(function(){
+      console.log("location data wasnt sent to DB")
+    })
+  }
 
   $scope.centerOnMe = function(){
     navigator.geolocation.getCurrentPosition(function(pos){

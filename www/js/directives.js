@@ -8,13 +8,13 @@ app.directive('map', function() {
       function initialize() {
 
         options = {
-          enableHighAccuracy: true,
+          enableHighAccuracy: false,
           timeout: 7000,
           maximumAge: 0
         };
 
         fail = function(){
-          return;
+          alert("BikeMe needsd access to your current location!");
         }
 
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -69,9 +69,6 @@ app.directive('map', function() {
             return false;
           });
 
-          // watchCurrentPosition(myMarker, map)
-          // availableDriverMarkers(map);
-        // watchCurrentPosition = function(marker, map){
           navigator.geolocation.watchPosition(function(position){
             console.log("watchPosition is happening")
             var currentLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
@@ -79,7 +76,6 @@ app.directive('map', function() {
             myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)); // Display on map
             scope.$parent.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
           });
-        // }
 
         },fail, options) // getCurrentPosition function closes
 
