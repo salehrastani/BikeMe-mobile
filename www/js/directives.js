@@ -8,13 +8,13 @@ app.directive('map', function() {
       function initialize() {
 
         options = {
-          enableHighAccuracy: true,
+          enableHighAccuracy: false,
           timeout: 7000,
           maximumAge: 0
         };
 
         fail = function(){
-          return;
+         return;
         }
 
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -52,14 +52,21 @@ app.directive('map', function() {
             icon: myImage
           });
 
-          var driverMarker = new google.maps.Marker({
-            map: map,
-            position: {lat: 37.865961 , lng: -122.278161},
-            icon: {
-              url: "img/driver-icon-64.png",
-              scaledSize: new google.maps.Size(26, 26)
-            }
-          });
+          // the backend will send the location of every driver in hashes of lat and lng.
+          // websockets? every five seconds the front end(?) in ajax the back end for the drivers locations.
+          // the directive will make markers according to the info and display on map
+
+          for (var i=0; i<scope.$parent.driversLocations.length; i++){
+            var driverLatLng={lat: parseFloat(scope.$parent.driversLocations[i][0]) , lng: parseFloat(scope.$parent.driversLocations[i][1])}
+            new google.maps.Marker({
+              map: map,
+              position: driverLatLng,
+              icon: {
+                url: "img/driver-icon-64.png",
+                scaledSize: new google.maps.Size(26, 26)
+              }
+            });
+          }
 
           scope.onCreate({map: map});
 
@@ -69,9 +76,6 @@ app.directive('map', function() {
             return false;
           });
 
-          // watchCurrentPosition(myMarker, map)
-          // availableDriverMarkers(map);
-        // watchCurrentPosition = function(marker, map){
           navigator.geolocation.watchPosition(function(position){
             console.log("watchPosition is happening")
             var currentLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
@@ -79,7 +83,6 @@ app.directive('map', function() {
             myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)); // Display on map
             scope.$parent.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
           });
-        // }
 
         },fail, options) // getCurrentPosition function closes
 

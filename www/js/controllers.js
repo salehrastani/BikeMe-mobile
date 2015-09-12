@@ -68,11 +68,29 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope){
+app.controller('driverDashCtrl', function($scope, $http){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
   };
+
+  $scope.sendLocation = function(mylatlng){
+    $http.post('http://bike-me.herokuapp.com/drivers/location', mylatlng)
+    .success(function(data){
+      console.log(data)
+    }).error(function(){
+      console.log("location data wasnt sent to DB")
+    })
+  }
+
+  $scope.getDriversLocations = function(){
+    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data.locations
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }()
 
   $scope.centerOnMe = function(){
     navigator.geolocation.getCurrentPosition(function(pos){
@@ -135,13 +153,22 @@ app.controller('passengerDashCtrl', function($scope, $http) {
   console.log("passengers dash controller")
 
   $scope.sendLocation = function(mylatlng){
-    $http.post('https://bike-me.herokuapp.com/locations/create', mylatlng)
+    $http.post('http://bike-me.herokuapp.com/passengers/location', mylatlng)
     .success(function(data){
       console.log(data)
     }).error(function(){
-      alert ("Please try again!")
+      // console.log("location data wasnt sent to DB")
     })
   }
+
+  $scope.getDriversLocations = function(){
+    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data.locations
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }()
 
   $scope.mapCreated = function(map){
     $scope.map = map;
