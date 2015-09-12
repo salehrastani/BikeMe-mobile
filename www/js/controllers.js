@@ -83,6 +83,15 @@ app.controller('driverDashCtrl', function($scope, $http){
     })
   }
 
+  $scope.getDriversLocations = function(){
+    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data.locations
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }()
+
   $scope.centerOnMe = function(){
     navigator.geolocation.getCurrentPosition(function(pos){
       $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
@@ -153,11 +162,11 @@ app.controller('passengerDashCtrl', function($scope, $http) {
   }
 
   $scope.getDriversLocations = function(){
-    $http.get('http://localhost:3000/drivers/locations')
+    $http.get('http://bike-me.herokuapp.com/drivers/locations')
     .success(function(data){
       $scope.driversLocations = data.locations
     }).error(function(){
-      console.log('couldnt get all drivers locations from BE')
+      console.log('couldnt get all drivers locations from DB')
     })
   }()
 
