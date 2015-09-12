@@ -14,7 +14,7 @@ app.directive('map', function() {
         };
 
         fail = function(){
-          alert("BikeMe needsd access to your current location!");
+         return;
         }
 
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -52,14 +52,21 @@ app.directive('map', function() {
             icon: myImage
           });
 
-          var driverMarker = new google.maps.Marker({
-            map: map,
-            position: {lat: 37.865961 , lng: -122.278161},
-            icon: {
-              url: "img/driver-icon-64.png",
-              scaledSize: new google.maps.Size(26, 26)
-            }
-          });
+          // the backend will send the location of every driver in hashes of lat and lng.
+          // websockets? every five seconds the front end(?) in ajax the back end for the drivers locations.
+          // the directive will make markers according to the info and display on map
+
+          for (var i=0; i<scope.$parent.driversLocations.length; i++){
+            var driverLatLng={lat: parseFloat(scope.$parent.driversLocations[i][0]) , lng: parseFloat(scope.$parent.driversLocations[i][1])}
+            new google.maps.Marker({
+              map: map,
+              position: driverLatLng,
+              icon: {
+                url: "img/driver-icon-64.png",
+                scaledSize: new google.maps.Size(26, 26)
+              }
+            });
+          }
 
           scope.onCreate({map: map});
 

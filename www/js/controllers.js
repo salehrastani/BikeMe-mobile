@@ -148,9 +148,18 @@ app.controller('passengerDashCtrl', function($scope, $http) {
     .success(function(data){
       console.log(data)
     }).error(function(){
-      console.log("location data wasnt sent to DB")
+      // console.log("location data wasnt sent to DB")
     })
   }
+
+  $scope.getDriversLocations = function(){
+    $http.get('http://localhost:3000/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data.locations
+    }).error(function(){
+      console.log('couldnt get all drivers locations from BE')
+    })
+  }()
 
   $scope.mapCreated = function(map){
     $scope.map = map;
