@@ -68,7 +68,7 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope, $http, $timeout){
+app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $rootScope){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
@@ -95,7 +95,7 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     }).error(function(){
       console.log('couldnt get all drivers locations from DB')
     })
-  }, 5000)
+  }, 2000)
 
   $scope.driverActivity = function(params){
     $http.post('http://bike-me.herokuapp.com/drivers/activate', params)
@@ -204,19 +204,46 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
     .success(function(data){
       $scope.driversLocations = data.locations
       if(data.locations){
-        console.log(data.locations)
         $rootScope.$broadcast('displayDriversLocations',data.locations);
       }
     }).error(function(){
       console.log('couldnt get all drivers locations from DB')
     })
-  }, 5000)
+  }, 2000)
 
   $scope.requestRide = function(){
-    console.log("requesting ride:")
-    console.log("by : " + $scope.currentLocation.lat + $scope.currentLocation.lng)
-    console.log("from: " + $scope.driversLocations[0][0]+$scope.driversLocations[0][1])
+    // findClosestMarker($scope.driversLocations, $scope.currentLocation)
+    // console.log("by : " + $scope.currentLocation.lat + $scope.currentLocation.lng)
+    // console.log("from: " + $scope.driversLocations[0][0]+$scope.driversLocations[0][1])
   }
+
+  $scope.rad = function(x){
+    return x*Math.PI/180;
+  }
+
+  $scope.findClosestMarker= function(drivers, passenger){
+    var lat = $passenger.lat;
+    var lng = $passenger.lng;
+    var raduisOfEarth = 6371; // radius of earth in km
+    var distances = [];
+    var closest = -1;
+    for( i=0;i<drivers.length; i++ ) {
+        var mlat = map.markers[i].position.lat();
+        var mlng = map.markers[i].position.lng();
+        var dLat  = rad(mlat - lat);
+        var dLong = rad(mlng - lng);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(rad(lat)) * Math.cos(rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = raduisOfEarth * c;
+        distances[i] = d;
+        if ( closest == -1 || d < distances[closest] ) {
+            closest = i;
+        }
+    }
+
+    alert(map.markers[closest].title);
+}
 
 
 });
