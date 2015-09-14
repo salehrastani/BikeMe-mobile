@@ -1,9 +1,17 @@
 <ion-view view-title="Dashboard">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-clear button-balanced activate-driver" ng-hide="activated" ng-click="activateDriver()" >
+      Drive
+    </button>
+    <button class="button button-clear button-assertive" ng-show="deActivated" ng-click="deActivateDriver()">
+      Rest
+    </button>
+  </ion-nav-buttons>
   <ion-content scroll="false">
-    <div class="on-top">
-      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
-    </div>
     <map on-create="mapCreated(map)"></map>
+    <div class="on-top">
+      <button ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></button>
+    </div>
   </ion-content>
 </ion-view>
 

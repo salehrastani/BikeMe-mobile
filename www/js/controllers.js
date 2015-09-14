@@ -68,7 +68,7 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope, $http){
+app.controller('driverDashCtrl', function($scope, $http, $timeout){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
@@ -83,21 +83,39 @@ app.controller('driverDashCtrl', function($scope, $http){
     })
   }
 
-  $scope.getDriversLocations = function(){
-    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+  $scope.driverActivity = function(params){
+    $http.post('http://bike-me.herokuapp.com/drivers/activate', params)
     .success(function(data){
-      $scope.driversLocations = data.locations
+      console.log(data)
     }).error(function(){
-      console.log('couldnt get all drivers locations from DB')
+      console.log('couldnt activate driver')
     })
-  }()
+  }
 
-  $scope.centerOnMe = function(){
+  $scope.deActivateDriver = function(){
+    $scope.deActivated = false
+    $timeout(function() {
+      $scope.activated = false
+    }, 500);
+    $scope.driverActivity({active: false});
+  }
+
+  $scope.activateDriver = function(){
+    $scope.activated = true
+    $timeout(function(){
+      $scope.deActivated = true
+    }, 500);
+    $scope.driverActivity({active: true});
+  }
+
+  var centerOnMe = function(map){
+    console.log("centerOnMe")
     navigator.geolocation.getCurrentPosition(function(pos){
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
     });
   };
-});
+
+})
 
 app.controller('driverAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
 
@@ -161,26 +179,10 @@ app.controller('passengerDashCtrl', function($scope, $http) {
     })
   }
 
-  $scope.getDriversLocations = function(){
-    $http.get('http://bike-me.herokuapp.com/drivers/locations')
-    .success(function(data){
-      $scope.driversLocations = data.locations
-    }).error(function(){
-      console.log('couldnt get all drivers locations from DB')
-    })
-  }()
-
   $scope.mapCreated = function(map){
     $scope.map = map;
   };
 
-  $scope.centerOnMe = function(map){
-    console.log("in centerOnMe")
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log("in getCurrentPosition")
-      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    });
-  };
 });
 
 //-----------------------------------------------
