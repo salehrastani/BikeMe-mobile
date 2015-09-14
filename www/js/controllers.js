@@ -83,12 +83,12 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     })
   }
 
-  $scope.getDriversLocations = function(){
-    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+  activateDriver = function(){
+    $http.post('http://bike-me.herokuapp.com/drivers/activate')
     .success(function(data){
-      $scope.driversLocations = data.locations
+      console.log(data)
     }).error(function(){
-      console.log('couldnt get all drivers locations from DB')
+      console.log('couldnt get activate driver')
     })
   }
 
@@ -96,20 +96,16 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     $scope.deActivated = false
     $timeout(function() {
       $scope.activated = false
-    }, 300);
+    }, 500);
+    activateDriver();
   }
 
   $scope.activateDriver = function(){
     $scope.activated = true
     $timeout(function(){
       $scope.deActivated = true
-    }, 300)
-    // $http.post('http://bike-me.herokuapp.com/drivers/activate')
-    // .success(function(data){
-    //   console.log(data)
-    // }).error(function(){
-    //   console.log('couldnt get activate driver')
-    // })
+    }, 500);
+    activateDriver();
   }
 
   $scope.centerOnMe = function(){
@@ -180,15 +176,6 @@ app.controller('passengerDashCtrl', function($scope, $http) {
       // console.log("location data wasnt sent to DB")
     })
   }
-
-  $scope.getDriversLocations = function(){
-    $http.get('http://bike-me.herokuapp.com/drivers/locations')
-    .success(function(data){
-      $scope.driversLocations = data.locations
-    }).error(function(){
-      console.log('couldnt get all drivers locations from DB')
-    })
-  }()
 
   $scope.mapCreated = function(map){
     $scope.map = map;
