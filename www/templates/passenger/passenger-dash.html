@@ -1,10 +1,11 @@
 
 <ion-view view-title="Dashboard">
   <ion-content scroll="false">
-    <div class="on-top">
-      <a ng-click="centerOnMe(map)" class="button button-icon icon ion-navigate"></a>
-    </div>
     <map on-create="mapCreated(map)"></map>
+    <div class="passenger-center on-top-1">
+      <button ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></button>
+    </div>
+    <button class="button button-block button-positive request on-top-1" ng-click="requestRide()">Request Ride</button>
   </ion-content>
 </ion-view>
 

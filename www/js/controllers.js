@@ -83,6 +83,20 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     })
   }
 
+  $scope.getDriversLocations = $interval(function(){
+    console.log("interval is digesting")
+    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data
+      if(data.locations){
+        console.log(data.locations)
+        $rootScope.$broadcast('displayDriversLocations',data.locations);
+      }
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }, 5000)
+
   $scope.driverActivity = function(params){
     $http.post('http://bike-me.herokuapp.com/drivers/activate', params)
     .success(function(data){
@@ -108,7 +122,7 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     $scope.driverActivity({active: true});
   }
 
-  var centerOnMe = function(map){
+  $scope.centerOnMe = function(map){
     console.log("centerOnMe")
     navigator.geolocation.getCurrentPosition(function(pos){
       map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
@@ -167,11 +181,12 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
   }
 })
 //-----------------------------------------------
-app.controller('passengerDashCtrl', function($scope, $http) {
+app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScope) {
   console.log("passengers dash controller")
 
-  $scope.sendLocation = function(mylatlng){
-    $http.post('http://bike-me.herokuapp.com/passengers/location', mylatlng)
+  $scope.sendLocation = function(myLatLng){
+    $scope.currentLocation = myLatLng
+    $http.post('http://bike-me.herokuapp.com/passengers/location', myLatLng)
     .success(function(data){
       console.log(data)
     }).error(function(){
@@ -182,6 +197,27 @@ app.controller('passengerDashCtrl', function($scope, $http) {
   $scope.mapCreated = function(map){
     $scope.map = map;
   };
+
+  $scope.getDriversLocations = $interval(function(){
+    console.log("interval is digesting")
+    $http.get('http://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data.locations
+      if(data.locations){
+        console.log(data.locations)
+        $rootScope.$broadcast('displayDriversLocations',data.locations);
+      }
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }, 5000)
+
+  $scope.requestRide = function(){
+    console.log("requesting ride:")
+    console.log("by : " + $scope.currentLocation.lat + $scope.currentLocation.lng)
+    console.log("from: " + $scope.driversLocations[0][0]+$scope.driversLocations[0][1])
+  }
+
 
 });
 
