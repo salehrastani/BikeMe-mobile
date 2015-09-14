@@ -1,4 +1,4 @@
-app.directive('map', function($timeout, $http) {
+app.directive('map', function($timeout, $http, $interval) {
   return {
     restrict: 'E',
     scope: {
@@ -16,13 +16,6 @@ app.directive('map', function($timeout, $http) {
         fail = function(){
          return;
         }
-
-        var centerOnMe = function(){
-          console.log("centerOnMe")
-          navigator.geolocation.getCurrentPosition(function(pos){
-          map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          });
-        };
 
         navigator.geolocation.getCurrentPosition(function (position) {
           console.log("getCurrentPosition function")
@@ -59,26 +52,27 @@ app.directive('map', function($timeout, $http) {
             icon: myImage
           });
 
-
-
-          getDriversLocations = function(){
+          getDriversLocations = $interval(function(){
+            console.log("interval is digesting")
             $http.get('http://bike-me.herokuapp.com/drivers/locations')
             .success(function(data){
-              for (var i=0; i<data.locations.length; i++){
-                var driverLatLng={lat: parseFloat(data.locations[i][0]) , lng: parseFloat(data.locations[i][1])}
-                new google.maps.Marker({
-                  map: map,
-                  position: driverLatLng,
-                  icon: {
-                    url: "img/driver-icon-64.png",
-                    scaledSize: new google.maps.Size(26, 26)
-                  }
-                });
+              if(data.locations){
+                for (var i=0; i<data.locations.length; i++){
+                  var driverLatLng={lat: parseFloat(data.locations[i][0]) , lng: parseFloat(data. locations[i][1])}
+                  new google.maps.Marker({
+                    map: map,
+                    position: driverLatLng,
+                    icon: {
+                      url: "img/driver-icon-64.png",
+                      scaledSize: new google.maps.Size(26, 26)
+                    }
+                  });
+                }
               }
             }).error(function(){
               console.log('couldnt get all drivers locations from DB')
             })
-          }()
+          }, 4000)()
 
           scope.onCreate({map: map});
 

@@ -8,10 +8,10 @@
     </button>
   </ion-nav-buttons>
   <ion-content scroll="false">
+    <map on-create="mapCreated(map)"></map>
     <div class="on-top">
       <button ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></button>
     </div>
-    <map on-create="mapCreated(map)"></map>
   </ion-content>
 </ion-view>
 

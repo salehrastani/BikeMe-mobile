@@ -22,8 +22,8 @@ iframe {
 }
 .front-page h1 {
   position: relative;
-  top: 40%;
-  transform: translateY(-55%);
+  top: 35%;
+  transform: translateY(-65%);
   margin: auto;
   font-family: 'Rock Salt';
   color: #333333;

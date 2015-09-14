@@ -97,7 +97,7 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     $timeout(function() {
       $scope.activated = false
     }, 500);
-    driverActivity({active: false});
+    $scope.driverActivity({active: false});
   }
 
   $scope.activateDriver = function(){
@@ -105,8 +105,15 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     $timeout(function(){
       $scope.deActivated = true
     }, 500);
-    driverActivity({active: true});
+    $scope.driverActivity({active: true});
   }
+
+  var centerOnMe = function(map){
+    console.log("centerOnMe")
+    navigator.geolocation.getCurrentPosition(function(pos){
+      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+    });
+  };
 
 })
 
