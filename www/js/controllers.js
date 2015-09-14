@@ -83,12 +83,12 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     })
   }
 
-  activateDriver = function(){
-    $http.post('http://bike-me.herokuapp.com/drivers/activate')
+  $scope.driverActivity = function(params){
+    $http.post('http://bike-me.herokuapp.com/drivers/activate', params)
     .success(function(data){
       console.log(data)
     }).error(function(){
-      console.log('couldnt get activate driver')
+      console.log('couldnt activate driver')
     })
   }
 
@@ -97,7 +97,7 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     $timeout(function() {
       $scope.activated = false
     }, 500);
-    activateDriver();
+    driverActivity({active: false});
   }
 
   $scope.activateDriver = function(){
@@ -105,15 +105,10 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     $timeout(function(){
       $scope.deActivated = true
     }, 500);
-    activateDriver();
+    driverActivity({active: true});
   }
 
-  $scope.centerOnMe = function(){
-    navigator.geolocation.getCurrentPosition(function(pos){
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    });
-  };
-});
+})
 
 app.controller('driverAccountCtrl', function($scope, $window, $ionicPopup, CookieHandler) {
 
@@ -181,13 +176,6 @@ app.controller('passengerDashCtrl', function($scope, $http) {
     $scope.map = map;
   };
 
-  $scope.centerOnMe = function(map){
-    console.log("in centerOnMe")
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log("in getCurrentPosition")
-      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    });
-  };
 });
 
 //-----------------------------------------------

@@ -17,6 +17,13 @@ app.directive('map', function($timeout, $http) {
          return;
         }
 
+        var centerOnMe = function(){
+          console.log("centerOnMe")
+          navigator.geolocation.getCurrentPosition(function(pos){
+          map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+          });
+        };
+
         navigator.geolocation.getCurrentPosition(function (position) {
           console.log("getCurrentPosition function")
           var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
