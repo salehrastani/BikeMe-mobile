@@ -68,7 +68,7 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope, $http){
+app.controller('driverDashCtrl', function($scope, $http, $timeout){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
@@ -91,6 +91,26 @@ app.controller('driverDashCtrl', function($scope, $http){
       console.log('couldnt get all drivers locations from DB')
     })
   }()
+
+  $scope.deActivateDriver = function(){
+    $scope.deActivated = false
+    $timeout(function() {
+      $scope.activated = false
+    }, 300);
+  }
+
+  $scope.activateDriver = function(){
+    $scope.activated = true
+    $timeout(function(){
+      $scope.deActivated = true
+    }, 300)
+    // $http.post('http://bike-me.herokuapp.com/drivers/activate')
+    // .success(function(data){
+    //   console.log(data)
+    // }).error(function(){
+    //   console.log('couldnt get activate driver')
+    // })
+  }
 
   $scope.centerOnMe = function(){
     navigator.geolocation.getCurrentPosition(function(pos){

@@ -52,10 +52,6 @@ app.directive('map', function() {
             icon: myImage
           });
 
-          // the backend will send the location of every driver in hashes of lat and lng.
-          // websockets? every five seconds the front end(?) in ajax the back end for the drivers locations.
-          // the directive will make markers according to the info and display on map
-
           for (var i=0; i<scope.$parent.driversLocations.length; i++){
             var driverLatLng={lat: parseFloat(scope.$parent.driversLocations[i][0]) , lng: parseFloat(scope.$parent.driversLocations[i][1])}
             new google.maps.Marker({

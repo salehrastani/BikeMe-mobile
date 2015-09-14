@@ -1,15 +1,21 @@
+.iframe-frame {
+  display: block;
+  z-index: 2;
+  margin: auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 iframe {
   display: block;
   z-index: 1;
   margin: auto;
   position: relative;
-  top: 55%;
-  transform: translateY(-45%);
+  top: 50%;
+  transform: translateY(-50%);
 }
-iframe:hover {
-}
-.scooter {
-  background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR73wUhfGTf_0WORo43G-3SbvBgHfc10tJvrziAJajDjLss6FI4Dg");
+.activate-driver {
+  z-index: 2;
 }
 .front-page {
   background-color: #04CCB5;
