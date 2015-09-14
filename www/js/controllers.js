@@ -90,7 +90,7 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     }).error(function(){
       console.log('couldnt get all drivers locations from DB')
     })
-  }()
+  }
 
   $scope.deActivateDriver = function(){
     $scope.deActivated = false

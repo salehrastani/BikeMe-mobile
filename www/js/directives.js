@@ -1,4 +1,4 @@
-app.directive('map', function() {
+app.directive('map', function($timeout, $http) {
   return {
     restrict: 'E',
     scope: {
@@ -52,17 +52,26 @@ app.directive('map', function() {
             icon: myImage
           });
 
-          for (var i=0; i<scope.$parent.driversLocations.length; i++){
-            var driverLatLng={lat: parseFloat(scope.$parent.driversLocations[i][0]) , lng: parseFloat(scope.$parent.driversLocations[i][1])}
-            new google.maps.Marker({
-              map: map,
-              position: driverLatLng,
-              icon: {
-                url: "img/driver-icon-64.png",
-                scaledSize: new google.maps.Size(26, 26)
+
+
+          getDriversLocations = function(){
+            $http.get('http://bike-me.herokuapp.com/drivers/locations')
+            .success(function(data){
+              for (var i=0; i<data.locations.length; i++){
+                var driverLatLng={lat: parseFloat(data.locations[i][0]) , lng: parseFloat(data.locations[i][1])}
+                new google.maps.Marker({
+                  map: map,
+                  position: driverLatLng,
+                  icon: {
+                    url: "img/driver-icon-64.png",
+                    scaledSize: new google.maps.Size(26, 26)
+                  }
+                });
               }
-            });
-          }
+            }).error(function(){
+              console.log('couldnt get all drivers locations from DB')
+            })
+          }()
 
           scope.onCreate({map: map});
 
