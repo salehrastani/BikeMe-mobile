@@ -56,8 +56,28 @@ app.directive('map', function($timeout, $http, $interval) {
           var tripRequest = false
 
           scope.$on('displayTripRequest',function(event, data){
-            scope.tripRequest= true;
+            scope.displayTripRequest(data);
           });
+
+          scope.hashCode = function(s){
+            return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+          }
+
+
+          scope.displayTripRequest = function(trip){
+            console.log("displayTripRequest has been evoked")
+            console.log(trip[0].origin.lat)
+            scope.clearMarkers(driversMarkers);
+            var passengerLatLng = {lat: parseFloat(trip[0].origin.lat) , lng: parseFloat(trip[0].origin.lng)}
+            new google.maps.Marker({
+              map: map,
+              position: passengerLatLng,
+              icon: {
+                url: "img/passenger-icon-64.png",
+                scaledSize: new google.maps.Size(26, 26)
+              }
+            });
+          }
 
           scope.$on('displayDriversLocations',function(event, data){
             scope.displayDriversLocations(data)

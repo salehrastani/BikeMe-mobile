@@ -103,13 +103,19 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
     })
   }, 2000)
 
+
+
   $scope.watchTrips = $interval(function(){
     console.log("trip watcher interval is digesting")
     $http.get('https://bike-me.herokuapp.com/trips')
     .success(function(data){
+      console.log("we are loggin nothing ?????")
       console.log(data)
       if(data){
-        $rootScope.$broadcast('displayTripRequest', data);
+        console.log("we dont know that its nothing")
+        $interval.cancel($scope.getDriversLocations)
+        $rootScope.$broadcast('displayTripRequest', data.trips);
+        // $interval.cancel($scope.watchTrips)
       }
     }).error(function(data){
       console.log('couldnt get all trips from DB')
@@ -231,13 +237,12 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
   $scope.requestDriver = function(closestDriversId){
     $scope.passengerId = CookieHandler.get["id"]
     tripDetails = {passenger_id: $scope.passengerId, driver_id: closestDriversId, origin:{lat:$scope.currentLocation.lat,lng:$scope.currentLocation.lng}}
-    $http.post("https://bike-me.herokuapp.com/trips",tripDetails)
+    $http.post("https://bike-me.herokuapp.com/trips", tripDetails)
       .success(function(data){
         console.log(data)
+        // go to directive and clear markers and show drivers marker only: scope.clearMarkers(driversMarkers);
       }).error(function(){
     })
-    // this will make a ajax call to the back end asking driver to accept request. it will pop a modal on drivers end and driver will click to evoke another ajax call that will tell passenger that the ride is started and give the rider the drivers information. a small zindexed window could pop up asking passenger to wait which will be hidden when the ajax call comes back.
-    // You could also show a "flash" message to the recipient. You would do this by for instance including on a base template some code to check if there are any unread messages that have not had a notification delivered yet; if there aren't, nothing happens, and if there are, then a notification is displayed and the fact that the notif was displayed is recorded so that it won't be displayed a second time.
   }
 
   $scope.findClosestDriver= function(drivers, passenger){

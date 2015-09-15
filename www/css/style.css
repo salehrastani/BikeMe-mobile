@@ -63,7 +63,7 @@ map {
   display: block;
   z-index: 1;
   margin: auto;
-  position: relative;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
 }
