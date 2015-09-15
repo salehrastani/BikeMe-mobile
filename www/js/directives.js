@@ -21,6 +21,7 @@ app.directive('map', function($timeout, $http, $interval) {
           console.log("getCurrentPosition function")
           var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
           scope.$parent.sendLocation(myLatLng);
+
           var mapOptions = {
             center: myLatLng,
             zoom: 16,
@@ -43,7 +44,7 @@ app.directive('map', function($timeout, $http, $interval) {
 
           var myImage = {
             url: userIcon(),
-            scaledSize: new google.maps.Size(30, 30)
+            scaledSize: new google.maps.Size(26, 26)
           };
 
           var myMarker = new google.maps.Marker({
@@ -52,27 +53,39 @@ app.directive('map', function($timeout, $http, $interval) {
             icon: myImage
           });
 
-          getDriversLocations = $interval(function(){
-            console.log("interval is digesting")
-            $http.get('http://bike-me.herokuapp.com/drivers/locations')
-            .success(function(data){
-              if(data.locations){
-                for (var i=0; i<data.locations.length; i++){
-                  var driverLatLng={lat: parseFloat(data.locations[i][0]) , lng: parseFloat(data. locations[i][1])}
-                  new google.maps.Marker({
-                    map: map,
-                    position: driverLatLng,
-                    icon: {
-                      url: "img/driver-icon-64.png",
-                      scaledSize: new google.maps.Size(26, 26)
-                    }
-                  });
+          var tripRequest = false
+
+          scope.$on('displayTripRequest',function(event, data){
+            scope.tripRequest= true;
+          });
+
+          scope.$on('displayDriversLocations',function(event, data){
+            scope.displayDriversLocations(data)
+          });
+
+          scope.clearMarkers = function(markers){
+            for(i=0;i<markers.length;i++){
+              markers[i].setMap(null);
+            }
+          }
+
+          var driversMarkers = []
+
+          scope.displayDriversLocations = function(locations){
+            console.log("displaydriversLocations has been evoked")
+            scope.clearMarkers(driversMarkers);
+            for (var i=0; i<locations.length; i++){
+              var driverLatLng={lat: parseFloat(locations[i][0]) , lng: parseFloat(locations[i][1])}
+              driversMarkers.push(new google.maps.Marker({
+                map: map,
+                position: driverLatLng,
+                icon: {
+                  url: "img/driver-icon-64.png",
+                  scaledSize: new google.maps.Size(26, 26)
                 }
-              }
-            }).error(function(){
-              console.log('couldnt get all drivers locations from DB')
-            })
-          }, 4000)()
+              }));
+            }
+          }
 
           scope.onCreate({map: map});
 
@@ -86,8 +99,8 @@ app.directive('map', function($timeout, $http, $interval) {
             console.log("watchPosition is happening")
             var currentLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
             scope.$parent.sendLocation(currentLatLng); // send to DB
-            myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)); // Display on map
-            scope.$parent.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
+            myMarker.setPosition(currentLatLng); // Display on map
+            scope.map.setCenter(currentLatLng)
           });
 
         },fail, options) // getCurrentPosition function closes

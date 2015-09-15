@@ -9,7 +9,10 @@
   </ion-nav-buttons>
   <ion-content scroll="false">
     <map on-create="mapCreated(map)"></map>
-    <div class="on-top">
+    <div class="on-top-1 trip-request" ng-show="tripRequest">
+      this is the request
+    </div>
+    <div class="driver-center on-top-1">
       <button ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></button>
     </div>
   </ion-content>

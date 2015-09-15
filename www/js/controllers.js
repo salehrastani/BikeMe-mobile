@@ -68,14 +68,15 @@ app.controller('passengerSigninCtrl', function($scope, $http, $location, $window
 })
 // ----------------------------------------------
 
-app.controller('driverDashCtrl', function($scope, $http, $timeout){
+app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $rootScope, CookieHandler){
 
   $scope.mapCreated = function(map){
     $scope.map = map;
   };
 
   $scope.sendLocation = function(mylatlng){
-    $http.post('http://bike-me.herokuapp.com/drivers/location', mylatlng)
+    $scope.currentLocation = mylatlng
+    $http.post('https://bike-me.herokuapp.com/drivers/location', mylatlng)
     .success(function(data){
       console.log(data)
     }).error(function(){
@@ -83,8 +84,40 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     })
   }
 
+  $scope.centerOnMe = function(){
+    console.log("centerOnMe")
+      $scope.map.setCenter($scope.currentLocation);
+  };
+
+  $scope.getDriversLocations = $interval(function(){
+    console.log("getDriversLocations interval is digesting")
+    $http.get('https://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data
+      if(data.locations){
+        console.log(data.locations)
+        $rootScope.$broadcast('displayDriversLocations',data.locations);
+      }
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }, 2000)
+
+  $scope.watchTrips = $interval(function(){
+    console.log("trip watcher interval is digesting")
+    $http.get('https://bike-me.herokuapp.com/trips')
+    .success(function(data){
+      console.log(data)
+      if(data){
+        $rootScope.$broadcast('displayTripRequest', data);
+      }
+    }).error(function(data){
+      console.log('couldnt get all trips from DB')
+    })
+  }, 2000)
+
   $scope.driverActivity = function(params){
-    $http.post('http://bike-me.herokuapp.com/drivers/activate', params)
+    $http.post('https://bike-me.herokuapp.com/drivers/activity', params)
     .success(function(data){
       console.log(data)
     }).error(function(){
@@ -107,13 +140,6 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout){
     }, 500);
     $scope.driverActivity({active: true});
   }
-
-  var centerOnMe = function(map){
-    console.log("centerOnMe")
-    navigator.geolocation.getCurrentPosition(function(pos){
-      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    });
-  };
 
 })
 
@@ -167,11 +193,12 @@ app.controller('driverPaymentsCtrl', function($scope, $http, $location, $window,
   }
 })
 //-----------------------------------------------
-app.controller('passengerDashCtrl', function($scope, $http) {
+app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScope, CookieHandler) {
   console.log("passengers dash controller")
 
-  $scope.sendLocation = function(mylatlng){
-    $http.post('http://bike-me.herokuapp.com/passengers/location', mylatlng)
+  $scope.sendLocation = function(myLatLng){
+    $scope.currentLocation = myLatLng
+    $http.post('https://bike-me.herokuapp.com/passengers/location', myLatLng)
     .success(function(data){
       console.log(data)
     }).error(function(){
@@ -182,6 +209,66 @@ app.controller('passengerDashCtrl', function($scope, $http) {
   $scope.mapCreated = function(map){
     $scope.map = map;
   };
+
+  $scope.centerOnMe = function(){
+    console.log("centerOnMe")
+      $scope.map.setCenter($scope.currentLocation);
+  };
+
+  $scope.getDriversLocations = $interval(function(){
+    console.log("getDriversLocations interval is digesting")
+    $http.get('https://bike-me.herokuapp.com/drivers/locations')
+    .success(function(data){
+      $scope.driversLocations = data.locations
+      if(data.locations){
+        $rootScope.$broadcast('displayDriversLocations',data.locations);
+      }
+    }).error(function(){
+      console.log('couldnt get all drivers locations from DB')
+    })
+  }, 5000)
+
+  $scope.requestDriver = function(closestDriversId){
+    $scope.passengerId = CookieHandler.get["id"]
+    tripDetails = {passenger_id: $scope.passengerId, driver_id: closestDriversId, origin:{lat:$scope.currentLocation.lat,lng:$scope.currentLocation.lng}}
+    $http.post("https://bike-me.herokuapp.com/trips",tripDetails)
+      .success(function(data){
+        console.log(data)
+      }).error(function(){
+    })
+    // this will make a ajax call to the back end asking driver to accept request. it will pop a modal on drivers end and driver will click to evoke another ajax call that will tell passenger that the ride is started and give the rider the drivers information. a small zindexed window could pop up asking passenger to wait which will be hidden when the ajax call comes back.
+    // You could also show a "flash" message to the recipient. You would do this by for instance including on a base template some code to check if there are any unread messages that have not had a notification delivered yet; if there aren't, nothing happens, and if there are, then a notification is displayed and the fact that the notif was displayed is recorded so that it won't be displayed a second time.
+  }
+
+  $scope.findClosestDriver= function(drivers, passenger){
+    var passengerLat = passenger.lat;
+    var passengerLng = passenger.lng;
+    var raduisOfEarth = 6371; // radius of earth in km
+    var distances = [];
+    var closest = -1;
+    for( i=0;i<drivers.length; i++ ) {
+      var driverLat = drivers[i][0];
+      var driverLng = drivers[i][1];
+      var distanceLat  = $scope.rad(driverLat - passengerLat);
+      var distanceLng = $scope.rad(driverLng - passengerLng);
+      var a = Math.sin(distanceLat/2) * Math.sin(distanceLat/2) + Math.cos($scope.rad(passengerLat)) * Math.cos($scope.rad(passengerLat)) * Math.sin(distanceLng/2) * Math.sin(distanceLng/2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = raduisOfEarth * c;
+      distances[i] = d;
+      if ( closest == -1 || d < distances[closest] ) {
+          closest = i;
+      }
+    }
+    $scope.requestDriver(drivers[closest][2]);
+  }
+
+  $scope.requestRide = function(){
+    $scope.findClosestDriver($scope.driversLocations, $scope.currentLocation)
+  }
+
+  $scope.rad = function(x){
+    return x * Math.PI/180;
+  }
 
 });
 
