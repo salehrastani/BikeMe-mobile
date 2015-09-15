@@ -21,6 +21,7 @@ app.directive('map', function($timeout, $http, $interval) {
           console.log("getCurrentPosition function")
           var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
           scope.$parent.sendLocation(myLatLng);
+
           var mapOptions = {
             center: myLatLng,
             zoom: 16,
@@ -52,6 +53,11 @@ app.directive('map', function($timeout, $http, $interval) {
             icon: myImage
           });
 
+          var tripRequest = false
+          scope.$on('displayTripRequest',function(event, data){
+            scope.tripRequest= true;
+          });
+
           scope.$on('displayDriversLocations',function(event, data){
             scope.displayDriversLocations(data)
           });
@@ -63,6 +69,7 @@ app.directive('map', function($timeout, $http, $interval) {
           }
 
           var driversMarkers = []
+
           scope.displayDriversLocations = function(locations){
             console.log("displaydriversLocations has been evoked")
             scope.clearMarkers(driversMarkers);
