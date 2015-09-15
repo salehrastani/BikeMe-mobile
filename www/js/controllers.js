@@ -101,7 +101,7 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
     }).error(function(){
       console.log('couldnt get all drivers locations from DB')
     })
-  }, 2000)
+  }, 1000)
 
 
 
@@ -113,14 +113,21 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
       console.log(data)
       if(data){
         console.log("we dont know that its nothing")
+        var tripId = data.trips[0].id
+        // console.log('https://bike-me.herokuapp.com/trips/' + tripId)
+        $http.put('https://bike-me.herokuapp.com/trips/' + tripId, {accepted:true})
+        .success(function(data){
+          console.log("we have succeeded")
+          console.log(data)
+
+        })
         $interval.cancel($scope.getDriversLocations)
         $rootScope.$broadcast('displayTripRequest', data.trips);
-        // $interval.cancel($scope.watchTrips)
       }
     }).error(function(data){
       console.log('couldnt get all trips from DB')
     })
-  }, 2000)
+  }, 1000)
 
   $scope.driverActivity = function(params){
     $http.post('https://bike-me.herokuapp.com/drivers/activity', params)
@@ -232,16 +239,28 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
     }).error(function(){
       console.log('couldnt get all drivers locations from DB')
     })
-  }, 5000)
+  }, 1000)
 
   $scope.requestDriver = function(closestDriversId){
+    $interval.cancel($scope.getDriversLocations)
+    // $interval(function(closestDriversId){
+    //   $http.get('https://bike-me.herokuapp.com/location/'+closestDriversId)
+    //   .success(function(location){
+    //     console.log(location)
+    //     // $rootScope.$broadcast('displayMyDriver', location);
+    //   })
+    // }, 1500)
     $scope.passengerId = CookieHandler.get["id"]
     tripDetails = {passenger_id: $scope.passengerId, driver_id: closestDriversId, origin:{lat:$scope.currentLocation.lat,lng:$scope.currentLocation.lng}}
+    var driverId = closestDriversId
     $http.post("https://bike-me.herokuapp.com/trips", tripDetails)
-      .success(function(data){
-        console.log(data)
-        // go to directive and clear markers and show drivers marker only: scope.clearMarkers(driversMarkers);
-      }).error(function(){
+    .success(function(data){
+      console.log(data)
+      $http.get('https://bike-me.herokuapp.com/location/'+driverId)
+      .success(function(location){
+        console.log(location)
+        $rootScope.$broadcast('displayMyDriver', location);
+      })
     })
   }
 

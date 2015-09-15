@@ -63,10 +63,8 @@ app.directive('map', function($timeout, $http, $interval) {
             return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
           }
 
-
           scope.displayTripRequest = function(trip){
             console.log("displayTripRequest has been evoked")
-            console.log(trip[0].origin.lat)
             scope.clearMarkers(driversMarkers);
             var passengerLatLng = {lat: parseFloat(trip[0].origin.lat) , lng: parseFloat(trip[0].origin.lng)}
             new google.maps.Marker({
@@ -74,6 +72,23 @@ app.directive('map', function($timeout, $http, $interval) {
               position: passengerLatLng,
               icon: {
                 url: "img/passenger-icon-64.png",
+                scaledSize: new google.maps.Size(26, 26)
+              }
+            });
+          }
+
+          scope.$on('displayMyDriver',function(event, data){
+            scope.displayMyDriversLocation(data)
+          });
+
+          scope.displayMyDriversLocation = function(location){
+            scope.clearMarkers(driversMarkers);
+            var driverLatLng = {lat: parseFloat(location.lat) , lng: parseFloat(location.lng)}
+            new google.maps.Marker({
+              map: map,
+              position: driverLatLng,
+              icon: {
+                url: "img/driver-icon-64.png",
                 scaledSize: new google.maps.Size(26, 26)
               }
             });
