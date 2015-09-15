@@ -74,7 +74,9 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
     $scope.map = map;
   };
 
+
   $scope.sendLocation = function(mylatlng){
+    $scope.currentLocation = mylatlng
     $http.post('http://bike-me.herokuapp.com/drivers/location', mylatlng)
     .success(function(data){
       console.log(data)
@@ -82,6 +84,11 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
       console.log("location data wasnt sent to DB")
     })
   }
+
+  $scope.centerOnMe = function(){
+    console.log("centerOnMe")
+      $scope.map.setCenter($scope.currentLocation);
+  };
 
   $scope.getDriversLocations = $interval(function(){
     console.log("interval is digesting")
@@ -121,13 +128,6 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
     }, 500);
     $scope.driverActivity({active: true});
   }
-
-  $scope.centerOnMe = function(map){
-    console.log("centerOnMe")
-    navigator.geolocation.getCurrentPosition(function(pos){
-      map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-    });
-  };
 
 })
 
@@ -198,6 +198,11 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
     $scope.map = map;
   };
 
+  $scope.centerOnMe = function(){
+    console.log("centerOnMe")
+      $scope.map.setCenter($scope.currentLocation);
+  };
+
   $scope.getDriversLocations = $interval(function(){
     console.log("interval is digesting")
     $http.get('http://bike-me.herokuapp.com/drivers/locations')
@@ -211,14 +216,8 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
     })
   }, 5000)
 
-  $scope.requestRide = function(){
-    $scope.findClosestDriver($scope.driversLocations, $scope.currentLocation)
-    // console.log("by : " + $scope.currentLocation.lat + $scope.currentLocation.lng)
-    // console.log("from: " + $scope.driversLocations[0][0]+$scope.driversLocations[0][1])
-  }
-
-  $scope.rad = function(x){
-    return x * Math.PI/180;
+  $scope.notifyClosestDriver = function(closestDriversId){
+    // this will make a ajax call to the back end asking driver to accept request. it will pop a modal on drivers end and driver will click to evoke another ajax call that will tell passenger that the ride is started and give the rider the drivers information. a small zindexed window could pop up asking passenger to wait which will be hidden when the ajax call comes back.
   }
 
   $scope.findClosestDriver= function(drivers, passenger){
@@ -240,7 +239,15 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
           closest = i;
       }
     }
-    alert("this is the closest driver's id: "+drivers[closest][2]);
+    $scope.notifyClosestDriver(drivers[closest][2]);
+  }
+
+  $scope.requestRide = function(){
+    $scope.findClosestDriver($scope.driversLocations, $scope.currentLocation)
+  }
+
+  $scope.rad = function(x){
+    return x * Math.PI/180;
   }
 
 });

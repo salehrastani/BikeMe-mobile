@@ -91,8 +91,8 @@ app.directive('map', function($timeout, $http, $interval) {
             console.log("watchPosition is happening")
             var currentLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
             scope.$parent.sendLocation(currentLatLng); // send to DB
-            myMarker.setPosition(new google.maps.LatLng(position.coords.latitude,position.coords.longitude)); // Display on map
-            scope.$parent.map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude))
+            myMarker.setPosition(currentLatLng); // Display on map
+            scope.map.setCenter(currentLatLng)
           });
 
         },fail, options) // getCurrentPosition function closes
