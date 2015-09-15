@@ -56,29 +56,26 @@ app.directive('map', function($timeout, $http, $interval) {
             scope.displayDriversLocations(data)
           });
 
-          $scope.clearMarkers = function(markers){
+          scope.clearMarkers = function(markers){
             for(i=0;i<markers.length;i++){
               markers[i].setMap(null);
             }
-            $scope.driverMarkers = []
           }
 
+          var driversMarkers = []
           scope.displayDriversLocations = function(locations){
             console.log("displaydriversLocations has been evoked")
-            // first delete all drivers markers; users (whether driver or passenger) will be fine cuz of watcher; then populate markers
-            clearMarkers($scope.driverMarkers);
-            // $scope.driversMarkers = []
+            scope.clearMarkers(driversMarkers);
             for (var i=0; i<locations.length; i++){
               var driverLatLng={lat: parseFloat(locations[i][0]) , lng: parseFloat(locations[i][1])}
-              $scope.driverMarker = new google.maps.Marker({
+              driversMarkers.push(new google.maps.Marker({
                 map: map,
                 position: driverLatLng,
                 icon: {
                   url: "img/driver-icon-64.png",
                   scaledSize: new google.maps.Size(26, 26)
                 }
-              driversMarkers.push($scope.driverMarker)
-              });
+              }));
             }
           }
 

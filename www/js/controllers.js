@@ -209,7 +209,7 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
     }).error(function(){
       console.log('couldnt get all drivers locations from DB')
     })
-  }, 2000)
+  }, 5000)
 
   $scope.requestRide = function(){
     // findClosestMarker($scope.driversLocations, $scope.currentLocation)
@@ -221,29 +221,29 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
     return x*Math.PI/180;
   }
 
-  $scope.findClosestMarker= function(drivers, passenger){
-    var lat = $passenger.lat;
-    var lng = $passenger.lng;
-    var raduisOfEarth = 6371; // radius of earth in km
-    var distances = [];
-    var closest = -1;
-    for( i=0;i<drivers.length; i++ ) {
-        var mlat = map.markers[i].position.lat();
-        var mlng = map.markers[i].position.lng();
-        var dLat  = rad(mlat - lat);
-        var dLong = rad(mlng - lng);
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(rad(lat)) * Math.cos(rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = raduisOfEarth * c;
-        distances[i] = d;
-        if ( closest == -1 || d < distances[closest] ) {
-            closest = i;
-        }
-    }
+//   $scope.findClosestMarker= function(drivers, passenger){
+//     var lat = $passenger.lat;
+//     var lng = $passenger.lng;
+//     var raduisOfEarth = 6371; // radius of earth in km
+//     var distances = [];
+//     var closest = -1;
+//     for( i=0;i<drivers.length; i++ ) {
+//         var mlat = map.markers[i].position.lat();
+//         var mlng = map.markers[i].position.lng();
+//         var dLat  = rad(mlat - lat);
+//         var dLong = rad(mlng - lng);
+//         var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+//             Math.cos(rad(lat)) * Math.cos(rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+//         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//         var d = raduisOfEarth * c;
+//         distances[i] = d;
+//         if ( closest == -1 || d < distances[closest] ) {
+//             closest = i;
+//         }
+//     }
 
-    alert(map.markers[closest].title);
-}
+//     alert(map.markers[closest].title);
+// }
 
 
 });
