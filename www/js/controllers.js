@@ -212,39 +212,36 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
   }, 5000)
 
   $scope.requestRide = function(){
-    // findClosestMarker($scope.driversLocations, $scope.currentLocation)
+    $scope.findClosestDriver($scope.driversLocations, $scope.currentLocation)
     // console.log("by : " + $scope.currentLocation.lat + $scope.currentLocation.lng)
     // console.log("from: " + $scope.driversLocations[0][0]+$scope.driversLocations[0][1])
   }
 
   $scope.rad = function(x){
-    return x*Math.PI/180;
+    return x * Math.PI/180;
   }
 
-//   $scope.findClosestMarker= function(drivers, passenger){
-//     var lat = $passenger.lat;
-//     var lng = $passenger.lng;
-//     var raduisOfEarth = 6371; // radius of earth in km
-//     var distances = [];
-//     var closest = -1;
-//     for( i=0;i<drivers.length; i++ ) {
-//         var mlat = map.markers[i].position.lat();
-//         var mlng = map.markers[i].position.lng();
-//         var dLat  = rad(mlat - lat);
-//         var dLong = rad(mlng - lng);
-//         var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-//             Math.cos(rad(lat)) * Math.cos(rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-//         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-//         var d = raduisOfEarth * c;
-//         distances[i] = d;
-//         if ( closest == -1 || d < distances[closest] ) {
-//             closest = i;
-//         }
-//     }
-
-//     alert(map.markers[closest].title);
-// }
-
+  $scope.findClosestDriver= function(drivers, passenger){
+    var passengerLat = passenger.lat;
+    var passengerLng = passenger.lng;
+    var raduisOfEarth = 6371; // radius of earth in km
+    var distances = [];
+    var closest = -1;
+    for( i=0;i<drivers.length; i++ ) {
+      var driverLat = drivers[i][0];
+      var driverLng = drivers[i][1];
+      var distanceLat  = $scope.rad(driverLat - passengerLat);
+      var distanceLng = $scope.rad(driverLng - passengerLng);
+      var a = Math.sin(distanceLat/2) * Math.sin(distanceLat/2) + Math.cos($scope.rad(passengerLat)) * Math.cos($scope.rad(passengerLat)) * Math.sin(distanceLng/2) * Math.sin(distanceLng/2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = raduisOfEarth * c;
+      distances[i] = d;
+      if ( closest == -1 || d < distances[closest] ) {
+          closest = i;
+      }
+    }
+    alert("this is the closest driver's id: "+drivers[closest][2]);
+  }
 
 });
 
