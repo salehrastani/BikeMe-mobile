@@ -105,19 +105,19 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
 
   $scope.watchTrips = $interval(function(){
     console.log("trip watcher interval is digesting")
-    $http.get('http://localhost:3000/trips')
+    $http.get('https://bike-me.herokuapp.com/trips')
     .success(function(data){
       console.log(data)
       if(data){
         $rootScope.$broadcast('displayTripRequest', data);
       }
-    }).error(function(){
+    }).error(function(data){
       console.log('couldnt get all trips from DB')
     })
   }, 2000)
 
   $scope.driverActivity = function(params){
-    $http.put('https://bike-me.herokuapp.com/drivers/activity', params)
+    $http.post('https://bike-me.herokuapp.com/drivers/activity', params)
     .success(function(data){
       console.log(data)
     }).error(function(){

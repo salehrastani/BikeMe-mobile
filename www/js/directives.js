@@ -54,6 +54,7 @@ app.directive('map', function($timeout, $http, $interval) {
           });
 
           var tripRequest = false
+
           scope.$on('displayTripRequest',function(event, data){
             scope.tripRequest= true;
           });
