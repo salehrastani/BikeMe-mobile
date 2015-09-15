@@ -53,15 +53,9 @@ app.directive('map', function($timeout, $http, $interval) {
             icon: myImage
           });
 
-          var tripRequest = false
-
           scope.$on('displayTripRequest',function(event, data){
             scope.displayTripRequest(data);
           });
-
-          scope.hashCode = function(s){
-            return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
-          }
 
           scope.displayTripRequest = function(trip){
             console.log("displayTripRequest has been evoked")

@@ -111,17 +111,16 @@ app.controller('driverDashCtrl', function($scope, $http, $timeout, $interval, $r
     .success(function(data){
       console.log("we are loggin nothing ?????")
       console.log(data)
+      $interval.cancel($scope.getDriversLocations)
       if(data){
         console.log("we dont know that its nothing")
         var tripId = data.trips[0].id
-        // console.log('https://bike-me.herokuapp.com/trips/' + tripId)
+        $scope.driverActivity({active: false})
         $http.put('https://bike-me.herokuapp.com/trips/' + tripId, {accepted:true})
         .success(function(data){
           console.log("we have succeeded")
           console.log(data)
-
         })
-        $interval.cancel($scope.getDriversLocations)
         $rootScope.$broadcast('displayTripRequest', data.trips);
       }
     }).error(function(data){
@@ -243,13 +242,6 @@ app.controller('passengerDashCtrl', function($scope, $http, $interval, $rootScop
 
   $scope.requestDriver = function(closestDriversId){
     $interval.cancel($scope.getDriversLocations)
-    // $interval(function(closestDriversId){
-    //   $http.get('https://bike-me.herokuapp.com/location/'+closestDriversId)
-    //   .success(function(location){
-    //     console.log(location)
-    //     // $rootScope.$broadcast('displayMyDriver', location);
-    //   })
-    // }, 1500)
     $scope.passengerId = CookieHandler.get["id"]
     tripDetails = {passenger_id: $scope.passengerId, driver_id: closestDriversId, origin:{lat:$scope.currentLocation.lat,lng:$scope.currentLocation.lng}}
     var driverId = closestDriversId
