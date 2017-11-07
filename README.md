@@ -1,13 +1,13 @@
-#BikeMe
+# BikeMe
 
-This is a mobile app connected to [BikeMe-Api](https://github.com/salehrastani/BikeMe-api) that will get you anywhere you wanna go within minutes. Imagine getting off of work and requesting a car from a ridesharing service at rush hour. The traffic is insane and you will be most probably paying a surged price. Meanwhile there are motorcycles splitting lanes and getting to wherever they want without a hassle. You could use BikeMe to get to where you wanna go in minutes.
+This is a mobile app connected to [BikeMe-Api](https://github.com/salehrastani/BikeMe-api) that will get you anywhere you wanna go within minutes. Imagine getting off of work and requesting a car from a ridesharing service at rush hour. The traffic is insane and you will be most probably paying a surged price. Meanwhile, there are motorcycles splitting lanes and getting to wherever they want without a hassle. You could use BikeMe to get to where you wanna go in minutes.
 
 You can check out this mobile app by downloading [Ionic View](http://view.ionic.io/) and using this ID Number: 61C95485
 
 
-##User Stories:
+## User Stories:
 
-###Passengers will be able to:
+### Passengers will be able to:
 
  - create an account
  - login and logout
@@ -16,7 +16,7 @@ You can check out this mobile app by downloading [Ionic View](http://view.ionic.
    - put in address
    - put in destination
    - finalize request
-   - see picture of driver and drivers car
+   - see picture of driver and drivers motorcycle
    - see passengers average ratings
    - see ETA
  - cancel a ride
@@ -26,10 +26,10 @@ You can check out this mobile app by downloading [Ionic View](http://view.ionic.
  - see their movement from origin to destination
  - rate the driver upon conclusion of ride
  
-###Drivers will be able to:
+### Drivers will be able to:
 
  - create an account
- - enter different cars for single account
+ - enter different motorcycles for single account
  - login and logout
  - enter financial credentials
  - receive ride requests from nearby passengers
@@ -45,7 +45,7 @@ You can check out this mobile app by downloading [Ionic View](http://view.ionic.
  - get payed
 
 
-##Technologies:
+## Technologies:
 
  - Angular
  - Ionic
